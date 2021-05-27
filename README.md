@@ -1,6 +1,10 @@
 # Basics Wrapup
 
-$$Topics$$
+<!-- math example $$ 
+F(x) = \int_{\infty}^{-\infty} \xi
+$$ -->
+
+$Topics$
 
 ## [OOP Basic Principals](/WrapUP-Basics/OOP/)
 
