@@ -1,5 +1,5 @@
 # WrapUP-Basics
 
-## [OOP Basic Principals](OOP/)
+## [OOP Basic Principals](/WrapUP-Basics/OOP/)
 
-## [SOLID Principals](SOLID/)
+## [SOLID Principals](/WrapUP-Basics/SOLID/)
