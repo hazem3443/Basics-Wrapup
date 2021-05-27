@@ -4,11 +4,11 @@ is an acronym for the first five object-oriented design (OOD) principles by Robe
 
 ## SOLID stands for
 
-- S - [Single-responsiblity Principle](##single-responsiblity-principle)
-- O - [Open-closed Principle](##open-closed-principle)
-- L - [Liskov Substitution Principle](##Liskov-substitution-principle)
-- I - [Interface Segregation Principle](##interface-segregation-principle)
-- D - [Dependency Inversion Principle](##dependency-inversion-principle)
+- S - [Single-responsiblity Principle](#single-responsiblity-principle)
+- O - [Open-closed Principle](#open-closed-principle)
+- L - [Liskov Substitution Principle](#Liskov-substitution-principle)
+- I - [Interface Segregation Principle](#interface-segregation-principle)
+- D - [Dependency Inversion Principle](#dependency-inversion-principle)
 
 ---
 
