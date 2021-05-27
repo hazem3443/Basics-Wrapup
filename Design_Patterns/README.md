@@ -4,7 +4,7 @@ In **1994**, four authors Erich Gamma, Richard Helm, Ralph Johnson and John Vlis
 
 - ## Types of Design Patterns
   - [Creational Patterns](#creational-patterns)
-    - [Factory Pattern](FactoryPattern)
+    - [Factory Pattern](Factory_Pattern)
     - [Abstract Factory Pattern](Abstract_Factory_Pattern)
   - [Structural Patterns](#structural-patterns)
   - [Behavioral Patterns](#behavioral-patterns)

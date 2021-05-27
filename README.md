@@ -10,4 +10,4 @@ $$ -->
 
 ### [SOLID Principals](SOLID)
 
-### [Design Patterns](DesignPatterns)
+### [Design Patterns](Design_Patterns)
