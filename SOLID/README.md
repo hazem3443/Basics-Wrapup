@@ -10,7 +10,7 @@
 <hr>
 
 # Single-responsiblity Principle
-```
+```text
 A class should have one and only one reason to change, meaning that a class should have only one job.
 ```
 even it's a job is a method or a property of a defined class
