@@ -1,21 +1,27 @@
-### SOLID is an acronym for the first five object-oriented design (OOD) principles by Robert C. Martin
-<br>
+# SOLID
 
-## SOLID stands for:
-- S - Single-responsiblity Principle
-- O - Open-closed Principle
+is an acronym for the first five object-oriented design (OOD) principles by Robert C Martin
+
+## SOLID stands for
+
+- S - [Single-responsiblity Principle](1)
+- O - [Open-closed Principle](2)
 - L - Liskov Substitution Principle
 - I - Interface Segregation Principle
 - D - Dependency Inversion Principle
-<hr>
 
-# Single-responsiblity Principle
-```txt
+---
+
+## [Single-responsiblity Principle](^1)
+
+```markdown
 A class should have one and only one reason to change, meaning that a class should have only one job.
 ```
+
 even it's a job is a method or a property of a defined class
 
 **code example**:
+
 ```php
 class Square 
 {
@@ -79,7 +85,9 @@ $areas = new AreaCalculator($shapes);
 echo $areas->output();
 
 ```
-also to reduce using many classes for our users we can make use of inheritance to make each shape inherite methods from base class such as shapeProperty class such that 
+
+also to reduce using many classes for our users we can make use of inheritance to make each shape inherite methods from base class such as shapeProperty class such that
+
 ```php
 class shapeProperties {
 
@@ -108,6 +116,7 @@ echo "\nwho is this area ".$circle1->Area(); //this will give us the previous re
 ```
 
 also if we want to print output in different formats this will violate this principle so to solve this we create a new class and remove output method inside AreaCalculator class such that
+
 ```php
 class SumCalculatorOutputter
 {
@@ -137,8 +146,10 @@ class SumCalculatorOutputter
       ]);
     }
 }
-``` 
-and for our second approach we can implement those methods inside shapeProperty class 
+```
+
+and for our second approach we can implement those methods inside shapeProperty class
+
 ```php
 class shapeProperties {
     ...
@@ -154,7 +165,7 @@ class shapeProperties {
 ```
 <hr>
 
-# Open-closed Principle
+## [Open-closed Principle](^2)
 ```
 Objects or entities should be open for extension but closed for modification.
 ```
