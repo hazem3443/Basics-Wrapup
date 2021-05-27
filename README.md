@@ -1,9 +1,9 @@
 # Basics Wrapup
 
-# $Topics$
+$$Topics$$
 
-### [$OOP Basic Principals$](/WrapUP-Basics/OOP/)
+## [OOP Basic Principals](/WrapUP-Basics/OOP/)
 
-### [$SOLID Principals$](/WrapUP-Basics/SOLID/)
+## [SOLID Principals](/WrapUP-Basics/SOLID/)
 
-### [$Design Patterns$](/WrapUP-Basics/Design-Patterns)
+## [Design Patterns](/WrapUP-Basics/Design-Patterns)
