@@ -14,9 +14,7 @@ is an acronym for the first five object-oriented design (OOD) principles by Robe
 
 ## Single-responsiblity Principle
 
-```markdown
-A class should have one and only one reason to change, meaning that a class should have only one job.
-```
+> A class should have one and only one reason to change, meaning that a class should have only one job.
 
 even it's a job is a method or a property of a defined class
 
@@ -168,9 +166,7 @@ class shapeProperties {
 
 ## Open-closed Principle
 
-```markdown
-Objects or entities should be open for extension but closed for modification.
-```
+> Objects or entities should be open for extension but closed for modification.
 
 This means that a class should be extendable without modifying the class itself.
 
@@ -277,9 +273,7 @@ class AreaCalculator
 
 ## Liskov Substitution Principle
 
-```markdown
-Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T.
-```
+> Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T.
 
 this pattern states that if an object B inherits from object A then all properties of type A is provable for objects of type B or can be handled without any problem
 
@@ -319,9 +313,7 @@ VolumeCalculator is subcalss of AreaCalculator then property SumCalculatorOutput
 
 ## Interface Segregation Principle
 
-```markdown
-A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
-```
+> A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
 
 this mean you need to separate interfaces and only implement the one you need or will depend on later.
 
@@ -377,9 +369,7 @@ That satisfies the interface segregation principle.
 
 ## Dependency Inversion Principle
 
-```markdown
-Entities must depend on abstractions, not on concretions. It states that the high-level module must not depend on the low-level module, but they should depend on abstractions.
-```
+> Entities must depend on abstractions, not on concretions. It states that the high-level module must not depend on the low-level module, but they should depend on abstractions.
 
 This principle allows for decoupling and make layers independent.
 
