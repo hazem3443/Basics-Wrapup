@@ -4,15 +4,15 @@ is an acronym for the first five object-oriented design (OOD) principles by Robe
 
 ## SOLID stands for
 
-- S - [Single-responsiblity Principle](1)
-- O - [Open-closed Principle](2)
-- L - Liskov Substitution Principle
-- I - Interface Segregation Principle
-- D - Dependency Inversion Principle
+- S - [Single-responsiblity Principle](##single-responsiblity-principle)
+- O - [Open-closed Principle](##open-closed-principle)
+- L - [Liskov Substitution Principle](##Liskov-substitution-principle)
+- I - [Interface Segregation Principle](##interface-segregation-principle)
+- D - [Dependency Inversion Principle](##dependency-inversion-principle)
 
 ---
 
-## [Single-responsiblity Principle](^1)
+## Single-responsiblity Principle
 
 ```markdown
 A class should have one and only one reason to change, meaning that a class should have only one job.
@@ -165,7 +165,7 @@ class shapeProperties {
 ```
 <hr>
 
-## [Open-closed Principle](^2)
+## Open-closed Principle
 ```
 Objects or entities should be open for extension but closed for modification.
 ```
@@ -262,7 +262,7 @@ class AreaCalculator
  the same idea can be applied with base class that have area method and shapes extends from it so if they are having this class then they have or implements this method but interfaces are more clear and does the job pretty well. 
 <hr>
 
-# Liskov Substitution Principle
+## Liskov Substitution Principle
 ```
 Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T.
 ```
@@ -298,7 +298,7 @@ VolumeCalculator is subcalss of AreaCalculator then property SumCalculatorOutput
 ```
 <hr>
 
-# Interface Segregation Principle
+## Interface Segregation Principle
 ```
 A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
 ```
@@ -351,7 +351,7 @@ Now in **AreaCalculator** class, you can replace the call to the area method wit
 That satisfies the interface segregation principle.
 <hr>
 
-# Dependency Inversion Principle
+## Dependency Inversion Principle
 ```
 Entities must depend on abstractions, not on concretions. It states that the high-level module must not depend on the low-level module, but they should depend on abstractions.
 ```
