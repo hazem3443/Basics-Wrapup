@@ -10,4 +10,4 @@ $$ -->
 
 ### [SOLID Principals](/WrapUP-Basics/SOLID/)
 
-### [Design Patterns](../blob/master/DesignPatterns/)
+### [Design Patterns](./blob/master/DesignPatterns/)
