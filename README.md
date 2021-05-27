@@ -6,8 +6,8 @@ $$ -->
 
 ## Topics
 
-### [OOP Basic Principals](/WrapUP-Basics/OOP/)
+### [OOP Basic Principals](OOP)
 
-### [SOLID Principals](/WrapUP-Basics/SOLID/)
+### [SOLID Principals](SOLID)
 
 ### [Design Patterns](DesignPatterns)

@@ -1,10 +1,10 @@
-# $Design Patterns$
+# Design Patterns
 
 In **1994**, four authors Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides published a book titled Design Patterns - Elements of Reusable Object-Oriented Software which initiated the concept of Design Pattern in Software development.
 
-- ## $Types of Design Patterns$
+- ## Types of Design Patterns
   - [Creational Patterns](#creational-patterns)
-    - [Factory Pattern](factory-pattern)
+    - [Factory Pattern](FactoryPattern)
   - [Structural Patterns](#structural-patterns)
   - [Behavioral Patterns](#behavioral-patterns)
 
