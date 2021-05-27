@@ -163,21 +163,25 @@ class shapeProperties {
     }
 }
 ```
-<hr>
+
+---
 
 ## Open-closed Principle
-```
+
+```markdown
 Objects or entities should be open for extension but closed for modification.
 ```
+
 This means that a class should be extendable without modifying the class itself.
 
-Let’s revisit the AreaCalculator class and focus on the sum method which returns the sum of shapes inputed to **AreaCalculator** 
+Let’s revisit the AreaCalculator class and focus on the sum method which returns the sum of shapes inputed to **AreaCalculator**
 
 Consider a scenario where the user would like the sum of additional shapes like triangles, pentagons, hexagons, etc. You would have to constantly edit this file and add more if/else blocks. That would violate the open-closed principle.
 
 A way you can make this sum method better is to remove the logic to calculate the area of each shape out of the AreaCalculator class method and attach it to each shape’s class.
 
 Here is the area method defined in Square & Circle:
+
 ```php
 class Square
 {
@@ -208,7 +212,9 @@ class Circle
     }
 }
 ```
+
 also The sum method for AreaCalculator can then be rewritten as:
+
 ```php
 class AreaCalculator
 {
@@ -224,6 +230,7 @@ class AreaCalculator
     }
 }
 ```
+
 now for each new shape we create we need to define it's area method
 
 **However,** another problem arises. How do you know that the object passed into the AreaCalculator is actually a shape or if the shape has a method named area?
@@ -236,11 +243,15 @@ interface ShapeInterface
     public function area();
 }
 ```
-and modify your shapes' classes to 
+
+and modify your shapes' classes to
+
 ```php
 class ... implements ShapeInterface
 ```
+
 and In the sum method for **AreaCalculator**, you can check if the shapes provided are actually instances of the ShapeInterface; otherwise, throw an exception such that
+
 ```php
 class AreaCalculator
 {
@@ -259,22 +270,27 @@ class AreaCalculator
     }
 }
 ```
- the same idea can be applied with base class that have area method and shapes extends from it so if they are having this class then they have or implements this method but interfaces are more clear and does the job pretty well. 
-<hr>
+
+ the same idea can be applied with base class that have area method and shapes extends from it so if they are having this class then they have or implements this method but interfaces are more clear and does the job pretty well.
+
+---
 
 ## Liskov Substitution Principle
-```
+
+```markdown
 Let q(x) be a property provable about objects of x of type T. Then q(y) should be provable for objects y of type S where S is a subtype of T.
 ```
+
 this pattern states that if an object B inherits from object A then all properties of type A is provable for objects of type B or can be handled without any problem
 
-for substituting 
+for substituting
 talk(animal_obj) - animal_obj is an object of type animal and talk is a method can be applied to that object
 talk(bird_obj)   - bird_obj is an object of type bird and talk method can be applied to it where bird is a subtype of (inherits from) animal type
 
 it seems obvious that we didn't need to explain that but **This means that every subclass(child) or derived class should be substitutable(replacable) for their base or parent class.**which means child class have the parent method and properties
 
 Building off the example **AreaCalculator** class, consider a new **VolumeCalculator** class that extends the **AreaCalculator** class:
+
 ```php
 class VolumeCalculator extends AreaCalculator
 {
@@ -290,18 +306,23 @@ class VolumeCalculator extends AreaCalculator
     }
 }
 ```
-**remember** the method of **SumCalculatorOutputter** which can be applied to both area and volume classes which has **sum** method (can be inserted or implements this as interface) and each class implements it should has it 
 
-so for conclusion on our example 
-```
+**remember** the method of **SumCalculatorOutputter** which can be applied to both area and volume classes which has **sum** method (can be inserted or implements this as interface) and each class implements it should has it
+
+so for conclusion on our example
+
+```markdown
 VolumeCalculator is subcalss of AreaCalculator then property SumCalculatorOutputter should be fine for both of them as they both have the same method **sum** but VolumeCalculator overrides it with it's implementation 
 ```
-<hr>
+
+---
 
 ## Interface Segregation Principle
-```
+
+```markdown
 A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
 ```
+
 this mean you need to separate interfaces and only implement the one you need or will depend on later.
 
 ```php
@@ -317,8 +338,10 @@ interface ThreeDimensionalShapeInterface
 class Cuboid implements ShapeInterface, ThreeDimensionalShapeInterface
 {....
 ```
+
 and only implements the one you need or depend on.
 also, for type-hinting or use your interface method inside another interface method you can do it such that
+
 ```php
 interface ManageShapeInterface
 {
@@ -349,15 +372,19 @@ Now in **AreaCalculator** class, you can replace the call to the area method wit
 `that mean you can nest methods from different interfaces inside each other but you should create different interface for each new method and make sure you implement both the base interface and the derived interface`
 
 That satisfies the interface segregation principle.
-<hr>
+
+---
 
 ## Dependency Inversion Principle
-```
+
+```markdown
 Entities must depend on abstractions, not on concretions. It states that the high-level module must not depend on the low-level module, but they should depend on abstractions.
 ```
+
 This principle allows for decoupling and make layers independent.
 
 Here is an example of a PasswordReminder that connects to a MySQL database:
+
 ```php
 class MySQLConnection
 {
@@ -378,6 +405,7 @@ class PasswordReminder
     }
 }
 ```
+
 First, the **MySQLConnection** is the low-level module while the **PasswordReminder** is high level,
 **PasswordReminder** class is being forced to depend on the **MySQLConnection** class this would violate the **Dependency Inversion Principle**.
 
@@ -391,6 +419,7 @@ interface DBConnectionInterface
     public function connect();
 }
 ```
+
 The interface has a connect method and the **MySQLConnection** class implements this interface. Also, instead of directly type-hinting **MySQLConnection** class in the constructor of the **PasswordReminder**, you instead type-hint the **DBConnectionInterface** and no matter the type of database your application uses, the **PasswordReminder** class can connect to the database without any problems and open-close principle is not violated.
 
 ```php
