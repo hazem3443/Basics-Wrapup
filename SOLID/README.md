@@ -6,7 +6,7 @@ is an acronym for the first five object-oriented design (OOD) principles by Robe
 
 - S - [Single-responsiblity Principle](#single-responsiblity-principle)
 - O - [Open-closed Principle](#open-closed-principle)
-- L - [Liskov Substitution Principle](#Liskov-substitution-principle)
+- L - [Liskov Substitution Principle](#liskov-substitution-principle)
 - I - [Interface Segregation Principle](#interface-segregation-principle)
 - D - [Dependency Inversion Principle](#dependency-inversion-principle)
 
