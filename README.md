@@ -1,13 +1,13 @@
-# Basics Wrapup
+<!-- # Basics Wrapup -->
 
 <!-- math example $$ 
 F(x) = \int_{\infty}^{-\infty} \xi
 $$ -->
 
-## Topics
+# Topics
 
-### [OOP Basic Principals](OOP)
+## [OOP Basic Principals](OOP)
 
-### [SOLID Principals](SOLID)
+## [SOLID Principals](SOLID)
 
-### [Design Patterns](Design_Patterns)
+## [Design Patterns](Design_Patterns)
