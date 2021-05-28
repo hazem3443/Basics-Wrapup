@@ -5,15 +5,15 @@ In **1994**, four authors Erich Gamma, Richard Helm, Ralph Johnson and John Vlis
 - ## Types of Design Patterns
   
   - [Creational Patterns](#creational-patterns)
-    - [Factory Pattern](1.Factory_Pattern)
-    - [Abstract Factory Pattern](2.Abstract_Factory_Pattern)
-    - Singleton Pattern
+    - [Factory Pattern](1.1.Factory_Pattern)
+    - [Abstract Factory Pattern](1.2.Abstract_Factory_Pattern)
+    - [Singleton Pattern](1.3.Singleton_Pattern)
   - [Structural Patterns](#structural-patterns)
-    - Facade Pattern
-    - Bridge/Adapter Pattern
+    - [Facade Pattern](2.1.Facade_Pattern)
+    - [Bridge/Adapter Pattern](2.2.Bridge/Adapter_Pattern)
   - [Behavioral Patterns](#behavioral-patterns)
-    - Strategy Pattern
-    - Observer Pattern
+    - [Strategy Pattern](3.1.Strategy_Pattern)
+    - [Observer Pattern](3.3.Observer_Pattern)
 
 ### Creational Patterns
 
@@ -38,3 +38,31 @@ functionalities.
 ```markdown
 These design patterns are specifically concerned with communication between objects.
 ```
+
+## Notice
+
+ ___to run php in command line ubuntu you can follow these steps___
+
+- setup php for ubuntu  
+
+```bash
+   sudo apt install php7.3-cli php7.3-fpm php7.3-json php7.3-pdo php7.3-mysql php7.3-zip php7.3-gd  php7.3-mbstring php7.3-curl php7.3-xml php7.3-bcmath php7.3-json
+```
+
+- add this **shebang** to your first line of code
+
+```php
+  #!/usr/bin/php
+```
+
+- make the *.php file executable
+  
+  ```bash
+  chmod 755 *.php
+  ```
+
+- run code in terminal such that
+  
+  ```bash
+  ./*.php
+  ```
