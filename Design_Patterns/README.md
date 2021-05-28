@@ -13,7 +13,7 @@ In **1994**, four authors Erich Gamma, Richard Helm, Ralph Johnson and John Vlis
     - [Bridge/Adapter Pattern](2.2.Bridge/Adapter_Pattern)
   - [Behavioral Patterns](#behavioral-patterns)
     - [Strategy Pattern](3.1.Strategy_Pattern)
-    - [Observer Pattern](3.3.Observer_Pattern)
+    - [Observer Pattern](3.2.Observer_Pattern)
 
 ### Creational Patterns
 
