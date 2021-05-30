@@ -10,7 +10,7 @@ In **1994**, four authors Erich Gamma, Richard Helm, Ralph Johnson and John Vlis
     - [Singleton Pattern](1.3.Singleton_Pattern)
   - [Structural Patterns](#structural-patterns)
     - [Facade Pattern](2.1.Facade_Pattern)
-    - [Bridge/Adapter Pattern](2.2.Bridge/Adapter_Pattern)
+    - [Bridge/Adapter Pattern](2.2.Bridge-Adapter_Pattern)
   - [Behavioral Patterns](#behavioral-patterns)
     - [Strategy Pattern](3.1.Strategy_Pattern)
     - [Observer Pattern](3.2.Observer_Pattern)
