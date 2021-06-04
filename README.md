@@ -11,3 +11,5 @@ $$ -->
 ## [SOLID Principals](SOLID)
 
 ## [Design Patterns](Design_Patterns)
+
+## [Data Structure & Algorithms](Data_Structures_And_Algorithms)
