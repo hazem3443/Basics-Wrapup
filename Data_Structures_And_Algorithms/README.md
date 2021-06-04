@@ -9,12 +9,15 @@
 
 - ## Algorithms
 
-  - Searching
+  - ### Searching
+
     - [Linear Search](2.1.0_Linear_Search)
     - [Binary Search](2.1.1_Binary_Search)
     - [interpolation Search](2.1.2_Interpolation_Search)
     - [Hash Table](2.1.3_Hash_Table)
-  - Sorting
+  
+  - ### Sorting
+  
     - [Bubble Sort](2.2.0_Bubble_Sort)
     - [Insertion Sort](2.2.1_Insertion_Sort)
     - [Selection Sort](2.2.2_Selection_Sort)
