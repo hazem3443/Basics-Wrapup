@@ -1,5 +1,14 @@
 # Data Structures - Algorithms Basics
 
+The data in the data structures are processed by certain operations. The particular data structure chosen largely __depends on__ the frequency of the operation that needs to be performed on the data structure.
+
+- Traversing
+- Searching
+- Insertion
+- Deletion
+- Sorting
+- Merging
+
 - ## Data Structures
   
   - [Arrays](1.0_Arrays)
@@ -42,3 +51,29 @@
 
   - [Tower of Hanoi](5.0_Tower_Of_Hanoi)
   - [Fibonacci Series](5.1_Fibonacci_Series)
+
+### for more productivity
+
+we can add __gccAutomationScript.sh__ bash script file to command line aliases in __.bashrc__ file
+
+```bash
+~$vim ~/.bashrc 
+```
+
+and add this line
+
+```sh
+alias runc='~/Desktop/basics/Data_Structures_And_Algorithms/gccAutomationScript.sh'
+```
+
+then source .bashrc file
+
+```bash
+~$source ~/.bashrc
+```
+
+now you can use __runc__ command to run .c files such that
+
+```bash
+~$runc test.c
+```
