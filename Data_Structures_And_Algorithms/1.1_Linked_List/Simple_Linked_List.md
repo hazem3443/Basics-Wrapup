@@ -19,7 +19,7 @@ Adding a new node in linked list is a more than one step activity. We shall lear
 Deletion is also a more than one step process. We shall learn with pictorial representation.
 
 - __First__, locate the target node to be removed, by using searching algorithms.
-  ![Simple Linked List Deletion Diagram setp 1](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_deletion_0.jpg)
+      ![Simple Linked List Deletion Diagram setp 1](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_deletion_0.jpg)
 - __Second__,The left (previous) node of the target node now should point to the next node of the target node.
   ![Simple Linked List Deletion Diagram setp 2](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_deletion_1.jpg)
 - __Third__,we will remove what the target node is pointing at.
@@ -30,7 +30,7 @@ Deletion is also a more than one step process. We shall learn with pictorial rep
 We need to make the last node to be pointed by the head node and reverse the whole linked list.
 
 - __First__, we traverse to the end of the list. It should be pointing to NULL. Now, we shall make it point to its previous node.
-  ![Simple Linked List Reversion Diagram setp 1](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_reverse_1.jpg)
+      ![Simple Linked List Reversion Diagram setp 1](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_reverse_1.jpg)
 - __Second__,We have to make sure that the last node is not the last node. So we'll have some temp node, which looks like the head node pointing to the last node. Now, we shall make all left side nodes point to their previous nodes one by one.
   ![Simple Linked List Reversion Diagram setp 2](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_reverse_2.jpg)
 - __Third__,Except the node (first node) pointed by the head node, all nodes should point to their predecessor, making them their new successor. The first node will point to NULL.
