@@ -14,3 +14,4 @@ Doubly Linked List is a variation of Linked list in which navigation is possible
 | insert at certain key        |      O(n)       |
 | delete node of certain key   |      O(n)       |
 | update node of a certain key |      O(n)       |
+| reverse a linked list        |      O(n)       |
