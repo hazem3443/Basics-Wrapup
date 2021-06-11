@@ -6,7 +6,7 @@ Adding a new node in linked list is a more than one step activity. We shall lear
 
 - __First__, create a node using the same structure and find the location where it has to be inserted.
   
-  ![Simple Linked List insertion Diagram setp 1](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_insertion_0.jpg)
+      ![Simple Linked List insertion Diagram setp 1](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_insertion_0.jpg)
 - __second__,Imagine that we are inserting a node B (NewNode), between A (LeftNode) and C (RightNode). Then point B.next to C.
   
   ![Simple Linked List insertion Diagram setp 2](https://www.tutorialspoint.com/data_structures_algorithms/images/linked_list_insertion_1.jpg)
