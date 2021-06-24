@@ -55,3 +55,34 @@ A Pop operation may involve the following steps −
 - __Step 5__ − Returns success.
 
 ![POP operation UML Diagram](https://www.tutorialspoint.com/data_structures_algorithms/images/stack_pop_operation.jpg)
+
+AS example for stack app we can look at Expression Parsing program that uses app but first let's know more about notation :)
+
+## Expression Parsing
+
+The way to write arithmetic expression is known as a notation. An arithmetic expression can be written in three different but equivalent notations, i.e., without changing the essence or output of an expression. These notations are −
+
+- Infix Notation
+- Prefix (Polish) Notation
+- Postfix (Reverse-Polish) Notation
+
+### Infix Notation
+
+We write expression in infix notation, e.g. a - b + c, where operators are used in-between operands. It is easy for us humans to read, write, and speak in infix notation but the same does not go well with computing devices. An algorithm to process infix notation could be difficult and costly in terms of time and space consumption.
+
+### Prefix Notation
+
+In this notation, operator is prefixed to operands, i.e. operator is written ahead of operands. For example, +ab. This is equivalent to its infix notation a + b. Prefix notation is also known as Polish Notation.
+
+### Postfix Notation
+
+This notation style is known as Reversed Polish Notation. In this notation style, the operator is postfixed to the operands i.e., the operator is written after the operands. For example, ab+. This is equivalent to its infix notation a + b.
+
+| Serial No. |  Infix Notation   | Prefix Notation | Postfix Notation |
+| ---------- | :---------------: | :-------------: | :--------------: |
+| 1          |       a + b       |      + a b      |      a b +       |
+| 2          |    (a + b) ∗ c    |    ∗ + a b c    |    a b + c ∗     |
+| 3          |    a ∗ (b + c)    |    ∗ a + b c    |    a b c + ∗     |
+| 4          |   a / b + c / d   |  + / a b / c d  |  a b / c d / +   |
+| 5          | (a + b) ∗ (c + d) |  ∗ + a b + c d  |  a b + c d + ∗   |
+| 6          | ((a + b) ∗ c) - d |  - ∗ + a b c d  |  a b + c ∗ d -   |

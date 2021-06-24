@@ -5,6 +5,10 @@
         "string_view": "c",
         "ranges": "c",
         "stdbool.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "*.tcc": "c",
+        "type_traits": "c",
+        "compare": "c",
+        "functional": "c"
     }
 }
