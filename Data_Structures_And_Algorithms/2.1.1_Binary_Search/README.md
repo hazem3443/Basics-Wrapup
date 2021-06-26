@@ -6,11 +6,11 @@ Binary search is a fast search algorithm with run-time complexity of Ο(log n). 
 
 ## How Binary Search Works?
 
-1. starting from ordered lists
+1. starting from ordered lists  
     ![Sorted Array](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_0.jpg)
 
 2. identify mid index of the array with this equation __mid = low + (high - low) / 2__
- which is 0 + (9 - 0 ) / 2 = 4
+ which is 0 + (9 - 0 ) / 2 = 4  
     ![mid element](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_1.jpg)
 
 3. Now we compare the value stored at location 4, with the value being searched (__31__),We find that the value at location 4 is 27, which is not a match. As the value is greater than 27 and we have a sorted array, so we also know that the target value must be in the upper portion of the array.
