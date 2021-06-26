@@ -23,8 +23,8 @@ Binary search is a fast search algorithm with run-time complexity of Ο(log n). 
     The value stored at location 7 is not a match, rather it is more than what we are looking for. So, the value must be in the lower part from this location.
 
 5. Hence, we calculate the mid again. This time it is __5__.
- ![lower half of the array](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_5.jpg)
+    ![lower half of the array](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_5.jpg)
     We compare the value stored at location 5 with our target value. We find that it is a match.
 
-__Time Complexity = Ο(log n)__
+__Time Complexity = Ο(log n)__  
 __Space Complexity = O(3)__
