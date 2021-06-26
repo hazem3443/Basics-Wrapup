@@ -6,7 +6,8 @@ Binary search is a fast search algorithm with run-time complexity of Ο(log n). 
 
 ## How Binary Search Works?
 
-1. starting from ordered lists  
+1. starting from ordered lists.
+
     ![Sorted Array](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_0.jpg)
 
 2. identify mid index of the array with this equation __mid = low + (high - low) / 2__
