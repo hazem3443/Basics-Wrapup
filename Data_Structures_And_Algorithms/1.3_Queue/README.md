@@ -9,7 +9,11 @@ As in stacks, a queue can also be **implemented** using ___Arrays___, ___Linked-
 ## Basic Operations
 
 - __enqueue()__ − add (store) an item to the queue.
+  
+  ![Enqueue UML Diagram](https://www.tutorialspoint.com/data_structures_algorithms/images/queue_enqueue_diagram.jpg)
 - __dequeue()__ − remove (access) an item from the queue.
+  
+  ![Dequeue UML Diagram](https://www.tutorialspoint.com/data_structures_algorithms/images/queue_dequeue_diagram.jpg)
 
 Few more functions are required to make the above-mentioned queue operation efficient. These are −>
 
