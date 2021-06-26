@@ -4,6 +4,8 @@ A stack is an Abstract Data Type (ADT), commonly used in most programming langua
 
 A stack can be implemented by means of Array, Structure, Pointer, and Linked List. Stack can either be a fixed size one or it may have a sense of dynamic resizing. Here, we are going to implement stack using arrays, which makes it a fixed size stack implementation.
 
+stack follows first-in-last-out methodology.
+
 ## Basic Operations
 
 Stack operations may involve initializing the stack, using it and then de-initializing it. Apart from these basic stuffs, a stack is used for the following two primary operations −
