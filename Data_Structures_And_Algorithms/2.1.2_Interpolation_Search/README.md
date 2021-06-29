@@ -9,6 +9,6 @@ $$ mid = lo + \frac{(hi - lo)}{(list[hi] - list[lo])} *(data - list[lo]) $$
 
 this Search looks make a percent of the position of the required value in the array and compare over each iteration.
 
-__Time Complexity = Ο(log (log n))__(worst case)  
-__Time Complexity = Ο(log n)__(Best case)  
-__Space Complexity = S(3)__
+- __Time Complexity = Ο(log (log n))__(worst case).
+- __Time Complexity = Ο(log n)__(Best case)
+- __Space Complexity = S(3)__
