@@ -17,7 +17,8 @@ Binary search is a fast search algorithm with run-time complexity of Ο(log n). 
 3. Now we compare the value stored at location 4, with the value being searched (__31__),We find that the value at location 4 is 27, which is not a match. As the value is greater than 27 and we have a sorted array, so we also know that the target value must be in the upper portion of the array.
     ![right half of the array](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_2.jpg)
 
-4. We change our low to mid + 1 and find the new mid value again. __low = mid + 1, mid = low + (high - low) / 2__
+4. We change our low to mid + 1 and find the new mid value again.
+$$low = mid + 1, mid =low + \frac{(high - low)}{2}$$
  Our new mid is 7 now. We compare the value stored at location 7 with our target value 31.
     ![new mid](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_3.jpg)
 
