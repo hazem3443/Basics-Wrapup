@@ -11,19 +11,6 @@ mid = lo + \frac{(hi - lo)}{(list[hi] - list[lo])} *(data - list[lo])
 
 $$
 
-$$ \frac{\partial \rho}{\partial t} + \nabla \cdot \vec{j} = 0 \,. \label{eq:continuity} $$
-
-```latex
-\begin{equation}
-    \int_{\partial\Omega} \omega = \int_{\Omega} \mathrm{d}\omega \,.
-    \label{eq:stokes}
-\end{equation}
-```
-
-```math
-\frac{\partial \rho}{\partial t} + \nabla \cdot \vec{j} = 0 \,. \label{eq:continuity}
-```
-
 this Search looks make a percent of the position of the required value in the array and compare over each iteration.
 
 - __Time Complexity = Ο(log (log n))__(worst case).
