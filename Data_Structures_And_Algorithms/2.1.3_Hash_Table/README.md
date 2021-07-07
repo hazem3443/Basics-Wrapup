@@ -47,3 +47,8 @@ Following are the basic primary operations of a hash table.
 - **Insert** − inserts an element in a hash table.
 
 - **delete** − Deletes an element from a hash table.
+
+**Time Complexity**  --- O(1) for best casr
+**Time Complexity**  --- O(n) for worst case
+
+**Space Complexity** --- S(n)
