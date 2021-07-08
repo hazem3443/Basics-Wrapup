@@ -23,3 +23,7 @@ Not Stable Sorting changes the sequence of similar content in which they appear.
 it is comparison-based algorithm in which each pair of adjacent elements is compared and the elements are swapped if they are not in order.
 
 average and worst case Time complexity are of **Ο(n2)** where **n** is the number of items
+
+- not In-place sorting algorithm if we used our technique for swpping it becomdes in-place sorting
+- Stable algorithm
+- Adaptive algorithm
