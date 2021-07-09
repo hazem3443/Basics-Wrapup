@@ -9,6 +9,7 @@
         "*.tcc": "c",
         "type_traits": "c",
         "compare": "c",
-        "functional": "c"
+        "functional": "c",
+        "random": "c"
     }
 }
