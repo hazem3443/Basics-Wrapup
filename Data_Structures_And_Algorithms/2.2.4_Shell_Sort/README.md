@@ -18,6 +18,25 @@ where −
 then loop over that interval or loop (**interval**) times insertionly starting from interval index and into the
  inner loop subtract the interval from the inner cursor
 
+ ```psedo
+ Shell_Sort(){
+    /* calculate interval*/
+   while (interval < A.length /3){
+      interval = interval * 3 + 1
+   }
+
+   while (interval > 0){
+      for (int i = interval; i < len; i++){
+         for (int j = i; j > interval - 1 && x[j - interval] > valueToInsert; j -= interval){
+            swapByReference(x + j, x + j - interval);
+         }
+      }
+      /* calculate new interval*/
+      interval = (interval -1) /3;
+   }
+ }
+ ```
+
 - In-Place sorting algorithm
 - stable sorting
 - adaptive sorting algorithm
