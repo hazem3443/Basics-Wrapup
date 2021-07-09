@@ -50,7 +50,9 @@ merge(l1,l2){
 }
 ```
 
-- not In-place sorting algorithm
-    can be in place if we use **swap** function while checking instead of l3 assigning
+- Not In-place sorting algorithm
 - Stable Sorting
 - Adaptive algorithm
+
+**Time Complexity** O(n log(n))  
+**Space Complexity** O(n)

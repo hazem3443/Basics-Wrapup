@@ -24,11 +24,6 @@ void main()
     // printf("arr len = %lu\n", sizeof(arr) / sizeof(int));
 
     int arr[] = {10, 22, 3, 4, 5, 6};
-    int arr2[6] = {0};
-
-    printf("list arr2\n");
-    printList(arr2, 6);
-    printf("end arr2\n");
 
     int len = sizeof(arr) / sizeof(int);
     Merge_Sort(arr, len, 1);
