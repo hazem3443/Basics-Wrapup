@@ -21,7 +21,7 @@ then loop over that interval or loop (**interval**) times insertionly starting f
  ```psedo
  Shell_Sort(){
     /* calculate interval*/
-   while (interval < A.length /3){
+   while (interval < len /3){
       interval = interval * 3 + 1
    }
 
