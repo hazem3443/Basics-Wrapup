@@ -27,6 +27,7 @@ then loop over that interval or loop (**interval**) times insertionly starting f
 
    while (interval > 0){
       for (int i = interval; i < len; i++){
+         valueToInsert = x[i];
          for (int j = i; j > interval - 1 && x[j - interval] > valueToInsert; j -= interval){
             swapByReference(x + j, x + j - interval);
          }
