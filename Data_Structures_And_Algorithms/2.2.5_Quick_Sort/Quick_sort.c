@@ -12,7 +12,7 @@ void printList(int *x, int len);
 
 void main()
 {
-    int arr[] = {4, 6, 3, 2, 1, 9, 7};
+    int arr[] = {4, 6, 3, 2, 8, 8, 9};
     int len = sizeof(arr) / sizeof(int);
 
     Quick_Sort(arr, len, 0);

@@ -36,3 +36,12 @@ Using pivot algorithm recursively, we end up with smaller possible partitions. E
 - **Step 2** − partition the array using pivot value
 - **Step 3** − quicksort left partition recursively
 - **Step 4** − quicksort right partition recursively
+
+### some specs of Quick Sort
+
+- time Complexity = O(n^2)
+- space Complexity = S(3) ->(right, left, piveot) size
+
+- in place sorting
+- Stable Sorting
+- non-adaptive sorting
