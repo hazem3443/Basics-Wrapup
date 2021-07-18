@@ -62,8 +62,8 @@ void Hanoi_procedure(int src_stack_top, Stack_type *src, Stack_type *dest, Stack
 {
     if (src_stack_top == 1)
     {
-        printf("Move disk 1 from rod '%s' to rod  '%s'\t\t-----\t\t", ((src == &Source) ? "Source " : (src == &Destination) ? "Destination"
-                                                                                                                            : "Auxilary"),
+        printf("Move disk 1 from rod \t'%s'\t to rod  \t'%s'\t\t-----\t\t", ((src == &Source) ? "Source " : (src == &Destination) ? "Destination"
+                                                                                                                                  : "Auxilary"),
                ((dest == &Source) ? "Source " : (dest == &Destination) ? "Destination"
                                                                        : "Auxilary"));
         printf(" before n = %i ", src_stack_top);
@@ -77,8 +77,8 @@ void Hanoi_procedure(int src_stack_top, Stack_type *src, Stack_type *dest, Stack
     else
     {
         Hanoi_procedure(src_stack_top - 1, src, aux, dest);
-        printf("Move disk %i from rod '%s' to rod  '%s'\t\t-----\t\t", src_stack_top, ((src == &Source) ? "Source " : (src == &Destination) ? "Destination"
-                                                                                                                                            : "Auxilary"),
+        printf("Move disk %i from rod \t'%s'\t to rod  \t'%s'\t\t-----\t\t", src_stack_top, ((src == &Source) ? "Source " : (src == &Destination) ? "Destination"
+                                                                                                                                                  : "Auxilary"),
                ((dest == &Source) ? "Source " : (dest == &Destination) ? "Destination"
                                                                        : "Auxilary"));
         printf(" before n = %i ", src_stack_top);

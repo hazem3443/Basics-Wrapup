@@ -11,5 +11,6 @@
         "compare": "c",
         "functional": "c",
         "random": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
