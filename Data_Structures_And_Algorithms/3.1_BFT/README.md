@@ -27,5 +27,5 @@ At this stage, we are left with no unmarked (unvisited) nodes. But as per the al
 the only difference i noticed between DFS & BFS is that
 
 - DFS uses Stack
-- BFS uses Queue
+- BFS uses Queue  
 and all functions stay the same and the Breadth & depth traversal algorithms stay the same.
