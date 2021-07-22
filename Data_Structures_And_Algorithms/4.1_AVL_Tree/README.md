@@ -57,7 +57,6 @@ Double rotations are slightly complex version of already explained versions of r
 |        ![left-right rotation 4](https://www.tutorialspoint.com/data_structures_algorithms/images/right_rotation.jpg)         |               We shall now right-rotate the tree, making B the new root node of this subtree. C now becomes the right subtree of its own left subtree.               |
 |       ![left-right rotation 5](https://www.tutorialspoint.com/data_structures_algorithms/images/balanced_avl_tree.jpg)       |                                                                      The tree is now balanced.                                                                       |
 
-
 ## Right-Left Rotation
 
 The second type of double rotation is Right-Left Rotation. It is a combination of right rotation followed by left rotation.
