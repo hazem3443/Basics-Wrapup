@@ -41,11 +41,10 @@ The data in the data structures are processed by certain operations. The particu
 
 - ## Tree
 
-  - [Tree Traversal](4.0_Tree_Traversal)
-  - [Binary Search Tree](4.1_Binary_Search_Tree)
-  - [AVL Tree](4.2_AVL_Tree)
-  - [Spanning Tree](4.3_Spanning_Tree)
-  - [Heap](4.4_Heap)
+  - [Binary Search Tree](4.0_Binary_Search_Tree)
+  - [AVL Tree](4.1_AVL_Tree)
+  - [Spanning Tree](4.2_Spanning_Tree)
+  - [Heap](4.3_Heap)
   
 - ## Recursion
 
