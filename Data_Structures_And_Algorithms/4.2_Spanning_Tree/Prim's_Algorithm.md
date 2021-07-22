@@ -1,1 +1,2 @@
-# Prim's Algorithm
+# Prim's Spanning Tree Algorithm
+
