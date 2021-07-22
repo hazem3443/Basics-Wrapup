@@ -10,7 +10,7 @@ To understand Kruskal's algorithm let us consider the following example
 
 ## **Step 1** - Remove all loops and Parallel Edges
 
-Remove all loops and parallel edges from the given graph.
+Remove all loops and parallel edges from the given graph.  
 
 ![mst with loops dashed](https://www.tutorialspoint.com/data_structures_algorithms/images/mst_with_loops.jpg)
 
