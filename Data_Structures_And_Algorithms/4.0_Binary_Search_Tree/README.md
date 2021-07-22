@@ -30,8 +30,8 @@ Following are the important terms with respect to tree.
 
 ## Binary Search Tree Representation
 
-a Tree where A node's left child must have a value less than its parent's value and the node's right child must have a value greater than its parent value.
-![Binar_Search Tree Example](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_tree.jpg)
+a Tree where A node's left child must have a value less than its parent's value and the node's right child must have a value greater than its parent value.  
+![Binar_Search Tree Example](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_tree.jpg)  
 
 The code to write a tree node would be similar to what is given below. It has a data part and references to its left and right child nodes ,also you can add a key to it.
 
