@@ -13,7 +13,7 @@ To understand Kruskal's algorithm let us consider the following example
 Remove all loops and parallel edges from the given graph.  
 
 ![mst with loops dashed](https://www.tutorialspoint.com/data_structures_algorithms/images/mst_with_loops.jpg)
-
+  
 In case of parallel edges, keep the one which has the least cost associated and remove all others.
 
 ![mst with minimum edges](https://www.tutorialspoint.com/data_structures_algorithms/images/mst_without_loops.jpg)
