@@ -10,7 +10,9 @@
         "type_traits": "c",
         "compare": "c",
         "functional": "c",
-        "random": "c"
+        "random": "c",
+        "initializer_list": "c",
+        "utility": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
