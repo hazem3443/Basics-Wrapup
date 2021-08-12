@@ -58,7 +58,7 @@ for this technique we are gona make array fro memoization and we are gona pass t
 
 ### Tabulation of grid traveler
 
-
+here we create a table of **M x N** that has a time complexity of O(mn) and space complexity of S(mn) and after initilaizing the table[1][1] = 1 and on each element we need to add and the right and down elements to current element and put that accordingly on right and down elements
 
 #### **without memization**
 
@@ -72,6 +72,12 @@ for this technique we are gona make array fro memoization and we are gona pass t
 
 **Space Complexity** S(n) = n+m
 
+#### **with Tabulation**
+
+**Time Complexity** O(n) = (nm)  
+
+**Space Complexity** S(n) = nm
+
 ## Alvin's Memoization Recipe
 
 1. Make it work.
@@ -82,3 +88,12 @@ for this technique we are gona make array fro memoization and we are gona pass t
    1. add memo object
    2. add a base cast to return memo values
    3. store return values into the memo
+
+## Alvin's Tabulation Recipe
+
+1. visualize the problem as a table
+2. size the table based on the inputs
+3. initialize the table with default values
+4. seed the trivial answer into the table
+5. iterate through the table
+6. fill further positions based on the current position
