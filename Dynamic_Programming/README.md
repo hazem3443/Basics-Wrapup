@@ -159,4 +159,4 @@ first we need to represent the solution in a table format such that we will crea
 
 - draw a strategy first!!!
 
-Reference for this Wrapping up can be found [here](#https://www.youtube.com/watch?v=oBt53YbR9Kk)
+Reference for this Wrapping up can be found [here](https://www.youtube.com/watch?v=oBt53YbR9Kk)
