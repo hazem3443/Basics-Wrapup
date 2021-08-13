@@ -6,14 +6,14 @@ $$ -->
 
 # Topics
 
-## [OOP Basic Principals:fire:](OOP)
+## [OOP Basic Principals](OOP)
 
-## [SOLID Principals:boom:](SOLID)
+## [SOLID Principals](SOLID)
 
-## [Design Patterns :mask:](Design_Patterns)
+## [Design Patterns](Design_Patterns)
 
-## [Data Structure & Algorithms :smiling_imp:](Data_Structures_And_Algorithms)
+## [Data Structure & Algorithms](Data_Structures_And_Algorithms)
 
-## [Functional Programming In C Language :dizzy_face:](Functional_Programming)
+## [Functional Programming In C Language](Functional_Programming)
 
-## [Dynamic Programming In C Language with some Problems to solve :sunglasses:](Dynamic_Programming)
+## [Dynamic Programming In C Language with some Problems to solve](Dynamic_Programming)
