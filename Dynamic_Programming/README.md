@@ -24,7 +24,7 @@ and we will notice that the time complexity enhanced such that it would be O(n) 
 
 this technique rely on creating table of values from 0 to the n number and each time we will initialize the table with the sum of previous values it is much like the iterative approach of fibonacci problem
 
-#### **without memization:**
+#### **Brute Force:**
 
 **Time Complexity** O(n) = 2^n
 
@@ -60,7 +60,7 @@ for this technique we are gona make array fro memoization and we are gona pass t
 
 here we create a table of **M x N** that has a time complexity of O(mn) and space complexity of S(mn) and after initilaizing the table[1][1] = 1 and on each element we need to add and the right and down elements to current element and put that accordingly on right and down elements
 
-#### **without memization**
+#### **Brute Force**
 
 **Time Complexity** O(n) = 2^(n+m)  
 
@@ -97,3 +97,53 @@ here we create a table of **M x N** that has a time complexity of O(mn) and spac
 4. seed the trivial answer into the table
 5. iterate through the table
 6. fill further positions based on the current position
+
+## CanSum Problem
+
+this problem finds is a sum of a number is available from a given array for example
+if we have target of 7 and we have an array of {5,3,4,7} then we have a sum at 3+4 = 8 then the function that takes those arguments should return true representing that the sum is found
+
+there is away using recursion can be done, using that tree we can formulate the code
+
+![CanSum Tree example](CanSum/CanSum_Tree.png)
+
+and in order to find the time complexity we need to list those bullet points
+
+- at each node branching occures by n array elements
+- for the worst case (1) found in the array the tree depth is m
+
+then from this image we can formulate the time Complexity
+
+![Time Formulation of CanSum](CanSum/Time_complexity_CanSum.png)
+
+then now we can calculate the time complexity as O(n^m)
+
+and space complexity as S(n) = m depth of the tree
+
+### Memoization
+
+this memo function can be evaluated with target Number if we found a repeated TargetNumber then we need to retrieve the output value
+
+![Memoized CanSum](CanSum/Memoized_CanSum_problem.png)
+
+### Tabulation
+
+first we need to represent the solution in a table format such that we will create a table of targetSum length then initialize it with false and initialize the first index of 0 with true value then loop over the target and on each iteration we need to sum that index to the current array number within a loop and put that index by true and if we reach the final index with false then there is no sum if it is true the the sum is found
+
+### Brute Force
+
+**Time Complexity** = O(n^m)
+**Space Complexity** = O(m)
+
+### With Memoization
+
+**Time Complexity** = O(m*n)
+**Space Complexity** = O(m)
+
+### with Tabulation
+
+**Time Complexity** = O(m*n)
+**Space Complexity** = O(m)
+
+## HowSum Problem
+
