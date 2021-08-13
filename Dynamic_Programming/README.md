@@ -147,7 +147,7 @@ first we need to represent the solution in a table format such that we will crea
 
 <!-- ## HowSum Problem -->
 
-## Alvin's Dynamic Programming Advices
+## Alvin's Dynamic Programming Hints
 
 - Notice any overlapping subproblems
 
