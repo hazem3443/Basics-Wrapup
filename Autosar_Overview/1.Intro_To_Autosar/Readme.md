@@ -95,3 +95,7 @@ develope or write a specifications or modify already wrote ones
 
 - Autosar Expert  
 the one who choose controllers and defines which training they will have and actually he can support them by a training also it can be a title
+
+## 5-whys?
+
+before the 5th why you will know the reason of a problem
