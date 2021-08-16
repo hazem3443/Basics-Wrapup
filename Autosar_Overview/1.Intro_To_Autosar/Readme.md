@@ -90,7 +90,7 @@ also make sure that the system is working before deliver the project to the cust
 
 - Autosar Consortium Work Group Active Member  
 develope or write a specifications or modify already wrote ones
-**active member** the one who have a work load to contribute to the consortium whether writing specs or modifying old ones 
+**active member** the one who have a work load to contribute to the consortium whether writing specs or modifying old ones
 **passive member** the one who hasn't a workload or he is a listener in the consortium such as developpers of the autosar who uses autosar specs
 
 - Autosar Expert  
