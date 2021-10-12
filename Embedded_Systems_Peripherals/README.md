@@ -4,9 +4,9 @@
 
 - ##  [ADC peripheral](2.ADC)
 
-- ##  [PWM peripheral](3.PWM)
+- ##  [Timers peripheral](3.Timers)
 
-- ##  [Timers peripheral](4.Timers)
+- ##  [PWM peripheral](4.PWM)
 
 - ##  [UART peripheral](5.UART)
 
