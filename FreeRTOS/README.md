@@ -269,13 +269,14 @@ then we have 3 main thread functions
 
 1. **RTOS_threadInitLists** function
   this function initializes each list item by an empty list with **endItem**
-2. **RTOS_threadCreate** function
+2. **RTOS_threadCreate** function  
+
   ![TCP inside stack allocated for a task](TCB_inside_Stack_Block.png)
+
   this function starts with validating it's input values then
     - assign stack pointer of the thread which will be after thread TCP we can find this by knowing that we have stack size of 8kbytes and 18 word then thread-sp = sp + size*8 - 18*4
     - also TCP consists of exception return at the end to identify which stack is used msp or psp and return to FPU or not while context switching
     - also this function is going to be called from the SVC handler function
-
 3. **RTOS_threadGetCurrentReady** function
   this function is going to get the highest priority(lowest index in the ready list) thread in the ready list
 
@@ -316,8 +317,10 @@ then we have 3 main thread functions
 - Highest priority thread ready to run is always given control of the cpu
 - current **thread is preempted** when a higher priority thread is ready
 - **non-reentrant functions shall not used** without execlusive access such as swapping function if interrupt change values then swapping will be corrupted so we can call swap function a non-reentrant function which means we can't enter and renter again because of interrupts which will corrupt its resources and we need to use execlusive access such as mutexes and semaphores
-- lower priority threads may never be run (**starvation**) because of high priority task keep comming over and over.
+- lower priority threads may never be run (**starvation**) because of high priority task keep comming over and over.  
+
 ![Preemptive Kernel](Preemptive-Kernel.png)
+
 - **DeadLock** may cause corruption to high priority access which cause high priority task to fail.
 
 ---
@@ -360,7 +363,7 @@ then we have 3 main thread functions
 - semaphore is functionally similar to the mutex but with counter
 - mutex is considered a binary semaphore
 
-### Mailbox
+### **Mailbox**
 
 - used for interthread communication, unlike semaphores which provide only synchronization with information exchange.
 - using shared buffers, one thread can fill the buffer(provider),the other empties it(consumer).
