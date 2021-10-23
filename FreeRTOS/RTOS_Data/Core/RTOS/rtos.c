@@ -272,16 +272,16 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
     break;
 
     case 2:
-//      RTOS_mutexCreate((RTOS_mutex_t *) svc_args[0], (uint32_t) svc_args[1]);
+      RTOS_mutexCreate((RTOS_mutex_t *) svc_args[0], (uint32_t) svc_args[1]);
     break;
 
     case 3:
-//      returnStatus = RTOS_mutexLock((RTOS_mutex_t *) svc_args[0],
-//          (uint32_t) svc_args[1]);
+      returnStatus = RTOS_mutexLock((RTOS_mutex_t *) svc_args[0],
+          (uint32_t) svc_args[1]);
     break;
 
     case 4:
-//      RTOS_mutexRelease((RTOS_mutex_t *) svc_args[0]);
+      RTOS_mutexRelease((RTOS_mutex_t *) svc_args[0]);
     break;
 
     case 5:

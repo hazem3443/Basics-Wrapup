@@ -35,11 +35,16 @@ extern "C" {
 
 /* Includes */
 #include <stddef.h>
+#include <string.h>
+
 #include "stm32f1xx.h"
 //#include "stm32f4xx.h"
+
 #include "rtos_config.h"
 #include "rtos_list.h"
 #include "rtos_thread.h"
+
+#include "rtos_mutex.h"
 
 /**
  * @addtogroup stm32_examples

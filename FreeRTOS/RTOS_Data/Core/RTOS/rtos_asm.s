@@ -27,10 +27,9 @@ RTOS_PendSV_Handler:
     /* Save current context */
     /* ******************** */
     mrs r1, psp               /* Store psp in r1 */
-//    tst lr, #0x10             /* Test bit 4. if zero, need to stack floating point regs */
-//    it eq                     /* eq means zero flag is set */
-//   	nop
-   // vstmdbeq r1!, {s16-s31}   /* save floating point registers */
+//  tst lr, #0x10             /* Test bit 4. if zero, need to stack floating point regs */
+//  it eq                     /* eq means zero flag is set */
+//  vstmdbeq r1!, {s16-s31}   /* save floating point registers */
     mov r2, lr                /* Store lr in r2 */
     mrs r3, control           /* Store control in r3 */
     stmdb r1!,{r2-r11}        /* Store multiple registers (r2 to r11).
@@ -52,9 +51,8 @@ RTOS_PendSV_Handler:
     mov lr, r2                   /* Load lr with value from r2 */
     msr control, r3              /* Load control with value from r3 */
     isb                          /* Instruction Synchronization Barrier, recommended after control change */
-  //  tst lr, #0x10                /* Test bit 4. If zero, need to unstack floating point regs */
-  //  it eq                        /* eq means zero flag is set */
-  //  nop
-    //vldmiaeq r1!, {s16-s31}      /* Load floating point registers */
+//  tst lr, #0x10                /* Test bit 4. If zero, need to unstack floating point regs */
+//  it eq                        /* eq means zero flag is set */
+//  vldmiaeq r1!, {s16-s31}      /* Load floating point registers */
     msr psp, r1                  /* set psp to the stack pointer of the new current task */
     bx lr                        /* Return */

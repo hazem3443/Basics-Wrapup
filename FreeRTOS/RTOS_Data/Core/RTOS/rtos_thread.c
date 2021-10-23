@@ -233,26 +233,7 @@ void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
   pThread->item.itemValue = priority;
 
   /* Add new thread to ready list */
-  RTOS_listInsertEnd(&readyList[priority], &pThread->item);
-
-  /* Set current top priority */
-  if(priority < currentTopPriority)
-  {
-    currentTopPriority = priority;
-  }
-
-  /* Check the need for context switch when scheduler is running
-   * and this thread is the higher priority than the running thread */
-  if((NULL != pRunningThread)
-      && (priority < pRunningThread->priority))
-  {
-    /* Trigger context switch, set PendSV to pending */
-    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
-  }
-  else
-  {
-    /* Context switch is not required */
-  }
+  RTOS_threadAddToReadyList(pThread);
 }
 
 /**
@@ -305,6 +286,39 @@ void RTOS_threadSwitchRunning(void)
 
   /* Update current running thread */
   runningThreadID = pRunningThread->threadID;
+}
+
+/**
+ * @brief   Add thread to the ready list
+ * @note
+ * @param
+ * @retval  None
+ */
+void RTOS_threadAddToReadyList(RTOS_thread_t *pThread)
+{
+  /* Check input parameters */
+  ASSERT(NULL != pThread);
+
+  /* Add new thread to ready list */
+  RTOS_listInsertEnd(&readyList[pThread->priority], &pThread->item);
+
+  /* Set current top priority */
+  if (pThread->priority < currentTopPriority)
+  {
+    currentTopPriority = pThread->priority;
+  }
+
+  /* Check the need for context switch when scheduler is running
+   * and this thread is the higher priority than the running thread */
+  if ((NULL != pRunningThread) && (pThread->priority < pRunningThread->priority))
+  {
+    /* Trigger context switch, set PendSV to pending */
+    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+  }
+  else
+  {
+    /* Context switch is not required */
+  }
 }
 
 /**

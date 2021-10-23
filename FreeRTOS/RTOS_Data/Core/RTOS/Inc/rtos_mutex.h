@@ -1,11 +1,11 @@
 /*******************************************************************************
- * @file    rtos_thread.h
+ * @file    rtos_mutex.h
  * @author  Ahmed Eldeep
  * @email   ahmed@almohandes.org
  * @website http://almohandes.org/stm32
- * @date    15 Jul 2019
+ * @date    21 Jul 2019
  *
- * @brief   RTOS Thread
+ * @brief   RTOS Mutex
  * @note
  *
 @verbatim
@@ -25,8 +25,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
 /* Define to prevent recursive inclusion */
-#ifndef __RTOS_THREAD_H_
-#define __RTOS_THREAD_H_
+#ifndef __INC_RTOS_MUTEX_H_
+#define __INC_RTOS_MUTEX_H_
 
 /* C++ detection */
 #ifdef __cplusplus
@@ -36,49 +36,37 @@ extern "C" {
 /* Includes */
 
 /**
- * @addtogroup rtos
+ * @addtogroup stm32_examples
  * @{
  */
 
 /**
- * @addtogroup rtos_thread
+ * @addtogroup rtos_mutex
  * @{
  */
 
 /**
- * @defgroup rtos_thread_exported_typedefs
+ * @defgroup rtos_mutex_exported_typedefs
  * @{
  */
 
 /**
- * @brief      Thread type
- * @note
- * @see
- */
-typedef struct thread_t
-{
-  uint32_t pStackPointer;        /**< Stack pointer */
-  uint32_t priority;             /**< Thread priority */
-  uint32_t threadID;             /**< Used for trace */
-  RTOS_listItem_t item;          /**< List item of this thread */
-} RTOS_thread_t;
-
-/**
- * @brief      Thread stack type
+ * @brief      Mutex type
  * @note
  * @see
  */
 typedef struct
 {
-  uint64_t stack[THREAD_STACK_SIZE];  /**< Thread stack */
-} RTOS_stack_t;
+  uint32_t mutexValue;            /**< Mutex value */
+  RTOS_list_t waitingList;        /**< Waiting list of the mutex */
+} RTOS_mutex_t;
 
 /**
  * @}
  */
 
 /**
- * @defgroup rtos_thread_exported_defines
+ * @defgroup rtos_mutex_exported_defines
  * @{
  */
 
@@ -87,7 +75,7 @@ typedef struct
  */
 
 /**
- * @defgroup rtos_thread_exported_macros
+ * @defgroup rtos_mutex_exported_macros
  * @{
  */
 
@@ -96,7 +84,7 @@ typedef struct
  */
 
 /**
- * @defgroup rtos_thread_exported_constants
+ * @defgroup rtos_mutex_exported_constants
  * @{
  */
 
@@ -105,19 +93,18 @@ typedef struct
  */
 
 /**
- * @defgroup rtos_thread_exported_functions
+ * @defgroup rtos_mutex_exported_functions
  * @{
  */
 
-void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
-    uint32_t priority, void * pFunction);
-void RTOS_SVC_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
-    uint32_t priority, void * pFunction);
+void RTOS_mutexCreate(RTOS_mutex_t * pMutex, uint32_t initialValue);
+void RTOS_SVC_mutexCreate(RTOS_mutex_t * pMutex, uint32_t initialValue);
 
-void RTOS_threadInitLists(void);
-RTOS_thread_t * RTOS_threadGetRunning(void);
-void RTOS_threadSwitchRunning(void);
-void RTOS_threadAddToReadyList(RTOS_thread_t * pThread);
+uint32_t RTOS_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag);
+uint32_t RTOS_SVC_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag);
+
+void RTOS_mutexRelease(RTOS_mutex_t * pMutex);
+void RTOS_SVC_mutexRelease(RTOS_mutex_t * pMutex);
 
 /**
  * @}
@@ -134,4 +121,4 @@ void RTOS_threadAddToReadyList(RTOS_thread_t * pThread);
 }
 #endif
 
-#endif /*__RTOS_THREAD_H_ */
+#endif /*__INC_RTOS_MUTEX_H_ */

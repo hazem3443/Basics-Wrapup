@@ -9,6 +9,7 @@ static RTOS_stack_t thread1stack;
 static RTOS_thread_t thread2;
 static RTOS_stack_t thread2stack;
 
+static RTOS_mutex_t mutex1;
 
 void thread1function(void)
 {
@@ -58,6 +59,8 @@ int main (void)
 	//this function will push those args to registers R0 to R3 respectively
 	RTOS_SVC_threadCreate(&thread1, &thread1stack, 1, thread1function);
 	RTOS_SVC_threadCreate(&thread2, &thread2stack, 1, thread2function);
+
+	RTOS_SVC_mutexCreate(&mutex1, 1);
 
 	RTOS_SVC_schedulerStart();
 
