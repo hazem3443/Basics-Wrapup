@@ -85,6 +85,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 static volatile uint32_t sysTickCounter = 0;
 
 /**
+ * @brief   Thread and stack object for idle thread
+ */
+static RTOS_thread_t idleThread;
+static RTOS_stack_t idleThreadStack;
+
+/**
  * @}
  */
 
@@ -107,20 +113,25 @@ uint32_t svcEXEReturn;
  * @{
  */
 
-/**
- * @brief   Currently running thread pointer.
- */
-extern RTOS_thread_t * pRunningThread;
+static void idleThreadFunction(void);
 
 /**
  * @}
  */
 
 /**
- * @defgroup rtos_private_function_prototypes
- * @{
+ * @brief   Idle thread function
+ * @note
+ * @param   None
+ * @retval  None
  */
+static void idleThreadFunction(void)
+{
+  while(1)
+  {
 
+  }
+}
 /**
  * @}
  */
@@ -190,6 +201,39 @@ void RTOS_init(void)
  */
 void RTOS_schedulerStart(void)
 {
+  /* Create idle thread */
+  RTOS_threadCreate(
+	  &idleThread,
+	  &idleThreadStack,
+	  (THREAD_PRIORITY_LEVELS - 1),
+	  idleThreadFunction);
+
+  /* Pointer to the current running thread */
+  RTOS_thread_t * pRunningThread;
+
+  /* Update the running thread with the highest priority thread */
+  RTOS_threadSwitchRunning();
+
+  /* Get running thread */
+  pRunningThread = RTOS_threadGetRunning();
+
+  /* Set SVC interrupt return to the first thread */
+  svcEXEReturn = MEM32_ADDRESS(pRunningThread->pStackPointer);
+
+  /* Return to thread with PSP */
+  __set_PSP((uint32_t)(pRunningThread->pStackPointer + 10 * 4));
+
+  /* Switch to use Process Stack, unprivileged state */
+  __set_CONTROL(MEM32_ADDRESS((pRunningThread->pStackPointer + (1 << 2))));
+
+  /* Execute ISB after changing CONTROL */
+  __ISB();
+
+  /* Reset tick counter */
+  sysTickCounter = 0;
+
+  /* Enable all interrupts */
+  __set_BASEPRI(0);
 
 }
 
@@ -201,10 +245,16 @@ void RTOS_schedulerStart(void)
  */
 void RTOS_SVC_Handler_main(uint32_t * svc_args)
 {
+  /* Check input parameters */
+  ASSERT(NULL != svc_args);
+
   uint8_t svc_number;
 
   /* Memory[(Stacked PC)-2] */
   svc_number = ((char *) svc_args[6])[-2];
+
+  /* Temp variables */
+  uint32_t returnStatus;
 
   /* Check svc number */
   switch(svc_number)
@@ -221,11 +271,79 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
           (void *) svc_args[3]);
     break;
 
+    case 2:
+//      RTOS_mutexCreate((RTOS_mutex_t *) svc_args[0], (uint32_t) svc_args[1]);
+    break;
+
+    case 3:
+//      returnStatus = RTOS_mutexLock((RTOS_mutex_t *) svc_args[0],
+//          (uint32_t) svc_args[1]);
+    break;
+
+    case 4:
+//      RTOS_mutexRelease((RTOS_mutex_t *) svc_args[0]);
+    break;
+
+    case 5:
+//      RTOS_semaphoreCreate((RTOS_semaphore_t *) svc_args[0],
+//          (uint32_t) svc_args[1]);
+    break;
+
+    case 6:
+//      returnStatus = RTOS_semaphoreTake((RTOS_semaphore_t *) svc_args[0],
+//          (uint32_t) svc_args[1]);
+    break;
+
+    case 7:
+//      RTOS_semaphoreGive((RTOS_semaphore_t *) svc_args[0]);
+    break;
+
+    case 8:
+//      RTOS_mailboxCreate((RTOS_mailbox_t *) svc_args[0], (void *) svc_args[1],
+//          (uint32_t) svc_args[2], (uint32_t) svc_args[3]);
+    break;
+
+    case 9:
+//      returnStatus = RTOS_mailboxWrite((RTOS_mailbox_t *) svc_args[0],
+//          (uint32_t) svc_args[1], (const void * const) svc_args[2]);
+    break;
+
+    case 10:
+//      returnStatus = RTOS_mailboxRead((RTOS_mailbox_t *) svc_args[0],
+//          (uint32_t) svc_args[1], (void * const) svc_args[2]);
+    break;
+
     default:
       /* Not supported svc call */
       ASSERT(0);
     break;
+  }
 
+  /* Check svc number for return status */
+  switch(svc_number)
+  {
+
+    case 3:
+    case 6:
+    case 9:
+    case 10:
+      /* Check return status */
+      if(2 == returnStatus)
+      {
+        /* Context switch was triggered, update program counter,
+         * when the context is restored the thread will try again */
+        svc_args[6] = svc_args[6] - 2;
+      }
+      else
+      {
+        /* No context switch was triggered, pass return value */
+        svc_args[0] = returnStatus;
+      }
+    break;
+
+    default:
+      /* Handled above */
+    break;
   }
 }
 

@@ -12,12 +12,12 @@ static RTOS_stack_t thread2stack;
 
 void thread1function(void)
 {
-	init_GP(PC, 12, OUT50, O_GP_PP);
+	init_GP(PC, 13, OUT50, O_GP_PP);
 	while(1)
 	{
-		toggle_GP(PC, 12);
+		toggle_GP(PC, 13);
 
-		for (int var = 0; var < 1000000; ++var)
+		for (int var = 0; var < 10000; ++var)
 		{
 		}
 	}
@@ -30,12 +30,12 @@ void thread1function(void)
  */
 void thread2function(void)
 {
-	init_GP(PC, 13, OUT50, O_GP_PP);
+	init_GP(PC, 14, OUT50, O_GP_PP);
 	while(1)
 	{
-		toggle_GP(PC, 13);
+		toggle_GP(PC, 14);
 
-		for (int var = 0; var < 1000000; ++var)
+		for (int var = 0; var < 100000; ++var)
 		{
 		}
 	}

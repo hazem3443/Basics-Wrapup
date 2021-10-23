@@ -105,6 +105,16 @@ static uint32_t currentTopPriority = (THREAD_PRIORITY_LEVELS - 1);
 RTOS_thread_t * pRunningThread;
 
 /**
+ * @brief   Currently running thread ID.
+ */
+static uint32_t runningThreadID = 0;
+
+/**
+ * @brief   Number of threads
+ */
+static uint32_t numOfThreads = 0;
+
+/**
  * @}
  */
 
@@ -210,11 +220,17 @@ void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
   /* Set thread priority */
   pThread->priority = priority;
 
+  /* Increment number of threads and set the thread ID */
+  pThread->threadID = ++numOfThreads;
+
   /* Thread is not yet in any list */
   pThread->item.pList = NULL;
 
   /* Link this thread with its list item */
   pThread->item.pThread = (void *) pThread;
+
+  /* Set item value to the priority -- extra ordering value to order items with the same priority*/
+  pThread->item.itemValue = priority;
 
   /* Add new thread to ready list */
   RTOS_listInsertEnd(&readyList[priority], &pThread->item);
@@ -245,9 +261,9 @@ void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
  * @param
  * @retval  RTOS_thread_t *
  */
-RTOS_thread_t * RTOS_threadGetCurrentReady(void)
+RTOS_thread_t * RTOS_threadGetRunning(void)
 {
-  return readyList[currentTopPriority].pIndex->pThread;
+  return pRunningThread;
 }
 
 /**
@@ -256,9 +272,39 @@ RTOS_thread_t * RTOS_threadGetCurrentReady(void)
  * @param
  * @retval  None
  */
-void RTOS_threadSwitchContext(void)
+void RTOS_threadSwitchRunning(void)
 {
+  /* Find highest priority ready thread */
+  while (0 == readyList[currentTopPriority].numOfItems)
+  {
+	/* Check current top priority not greater than the maximum */
+	ASSERT(THREAD_PRIORITY_LEVELS > currentTopPriority);
 
+	/* No threads with the current top priority,
+	 * increment current top priority */
+	currentTopPriority++;
+  }
+
+  /* Threads are found, update list index to the next thread */
+  RTOS_list_t *pReadyList = &readyList[currentTopPriority];
+  pReadyList->pIndex = pReadyList->pIndex->pNext;
+
+  /* Check if the new index pointing to the end of the list */
+  if (pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)
+  {
+	/* Get the next thread */
+	pReadyList->pIndex = pReadyList->pIndex->pNext;
+  }
+  else
+  {
+	/* Do nothing, index is not pointing to the end */
+  }
+
+  /* Update current running thread */
+  pRunningThread = (RTOS_thread_t *)pReadyList->pIndex->pThread;
+
+  /* Update current running thread */
+  runningThreadID = pRunningThread->threadID;
 }
 
 /**

@@ -62,7 +62,7 @@ extern "C" {
 /**
  * @brief   Stack size for each thread in double words. e.g 1024 means 8Kbytes.
  */
-#define THREAD_STACK_SIZE                 ((uint32_t) 1024u)
+#define THREAD_STACK_SIZE                 ((uint32_t) 512u)
 
 /**
  * @brief   Thread maximum priority,

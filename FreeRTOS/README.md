@@ -323,6 +323,15 @@ then we have 3 main thread functions
 
 - **DeadLock** may cause corruption to high priority access which cause high priority task to fail.
 
+### **Start Scheduling** function
+
+this funciton will start execution of threads with help of svc call
+but first we need to create an **idle thread** and add it to the ready list to let the scheduler always running we need to at least have one dummy thread running called idel thread which is always located in ready list.
+
+if all tasks get into waiting list which is not supposed to happen we will need to run the idel thread
+
+here also we need to fetch the highest priority thread and set it to the running thread
+
 ---
 
 ## **Mutex, Semaphore and MailBox**
@@ -355,6 +364,13 @@ then we have 3 main thread functions
     - the scheduler shall run the next high priority ready thread
     - whenever the mutex got released, RTOS shall wake up the blocked thread and move it into ready list and trigger context switching.
     - Mutex lock and release operations are RTOS responsibility and shall be implemented using RTOS calls.
+  ![Mutex implementation using ARMCM3](Mutex_implementation_using_ARMCM3.png)
+    - The processor removes its exclusive access tag if:
+      - It executes a CLREX instruction
+      - It executes a Store-Exclusive instruction, regardless of whether the write succeeds.
+      - An exception occurs. This means the processor can resolve semaphore conflicts
+        between different threads.
+  ![c EXECLUSIVE ACCESS INSTRUCTIONS](c_EXECLUSIVE_ACCESS_INSTRUCTIONS.png)
 
 ### **Semaphore**
   

@@ -59,6 +59,7 @@ typedef struct thread_t
 {
   uint32_t pStackPointer;        /**< Stack pointer */
   uint32_t priority;             /**< Thread priority */
+  uint32_t threadID;             /**< Used for trace */
   RTOS_listItem_t item;          /**< List item of this thread */
 } RTOS_thread_t;
 
@@ -114,8 +115,9 @@ void RTOS_SVC_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
     uint32_t priority, void * pFunction);
 
 void RTOS_threadInitLists(void);
-RTOS_thread_t * RTOS_threadGetCurrentReady(void);
-void RTOS_threadSwitchContext(void);
+RTOS_thread_t * RTOS_threadGetRunning(void);
+void RTOS_threadSwitchRunning(void);
+
 
 /**
  * @}
