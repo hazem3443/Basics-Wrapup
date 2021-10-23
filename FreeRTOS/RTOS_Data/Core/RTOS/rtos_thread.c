@@ -114,6 +114,9 @@ static uint32_t runningThreadID = 0;
  */
 static uint32_t numOfThreads = 0;
 
+
+extern RTOS_thread_t idleThread;
+extern RTOS_stack_t idleThreadStack;
 /**
  * @}
  */
@@ -271,15 +274,15 @@ void RTOS_threadSwitchRunning(void)
   pReadyList->pIndex = pReadyList->pIndex->pNext;
 
   /* Check if the new index pointing to the end of the list */
-  if (pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)
+  while ((pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)||( (readyList[currentTopPriority].numOfItems>1) && ( (RTOS_listItem_t *)pReadyList->pIndex == &idleThread.item ) ))
   {
 	/* Get the next thread */
 	pReadyList->pIndex = pReadyList->pIndex->pNext;
   }
-  else
-  {
-	/* Do nothing, index is not pointing to the end */
-  }
+//  else
+//  {
+//	/* Do nothing, index is not pointing to the end */
+//  }
 
   /* Update current running thread */
   pRunningThread = (RTOS_thread_t *)pReadyList->pIndex->pThread;

@@ -6,10 +6,17 @@
 
 static RTOS_thread_t thread1;
 static RTOS_stack_t thread1stack;
+
 static RTOS_thread_t thread2;
 static RTOS_stack_t thread2stack;
 
+static RTOS_thread_t thread3;
+static RTOS_stack_t thread3stack;
+
 static RTOS_mutex_t mutex1;
+static RTOS_semaphore_t semaphore1;
+static RTOS_mailbox_t mailbox1;
+static uint32_t mailbox1buffer[2];
 
 void thread1function(void)
 {
@@ -42,25 +49,38 @@ void thread2function(void)
 	}
 }
 
+/**
+ * @brief   thread3function
+ * @note
+ * @param   none
+ * @retval  none
+ */
+void thread3function(void)
+{
+	init_GP(PC, 15, OUT50, O_GP_PP);
+	while(1)
+	{
+		toggle_GP(PC, 15);
+
+		for (int var = 0; var < 200000; ++var)
+		{
+		}
+	}
+}
+
 int main (void)
 {
-	/*
-	//	SysTick_Config(SystemCoreClock / 1000);
-//	Systic_init();
-////	init_GP(PC, 13, OUT50, O_GP_PP);
-//	while(1)
-//	{
-////		toggle_GP(PC, 13);
-////		DelayMs(1000);
-//	}
-*/
+
 	RTOS_init();
 
 	//this function will push those args to registers R0 to R3 respectively
 	RTOS_SVC_threadCreate(&thread1, &thread1stack, 1, thread1function);
 	RTOS_SVC_threadCreate(&thread2, &thread2stack, 1, thread2function);
+	RTOS_SVC_threadCreate(&thread3, &thread3stack, 1, thread3function);
 
 	RTOS_SVC_mutexCreate(&mutex1, 1);
+	RTOS_SVC_semaphoreCreate(&semaphore1, 1);
+	RTOS_SVC_mailboxCreate(&mailbox1, mailbox1buffer, 2, 4);
 
 	RTOS_SVC_schedulerStart();
 

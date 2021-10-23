@@ -1,11 +1,11 @@
 /*******************************************************************************
- * @file    rtos.h
+ * @file    rtos_semaphore.h
  * @author  Ahmed Eldeep
  * @email   ahmed@almohandes.org
  * @website http://almohandes.org/stm32
- * @date    16 Jul 2019
+ * @date    27 Jul 2019
  *
- * @brief   RTOS Main
+ * @brief   RTOS Semaphore
  * @note
  *
 @verbatim
@@ -25,8 +25,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
 /* Define to prevent recursive inclusion */
-#ifndef __INC_RTOS_H_
-#define __INC_RTOS_H_
+#ifndef __INC_RTOS_SEMAPHORE_H_
+#define __INC_RTOS_SEMAPHORE_H_
 
 /* C++ detection */
 #ifdef __cplusplus
@@ -34,31 +34,39 @@ extern "C" {
 #endif
 
 /* Includes */
-#include <stddef.h>
-#include <string.h>
 
-#include "stm32f1xx.h"
-//#include "stm32f4xx.h"
-
-#include "rtos_config.h"
-#include "rtos_list.h"
-#include "rtos_thread.h"
-
-#include "rtos_mutex.h"
-#include "rtos_semaphore.h"
-#include "rtos_mailbox.h"
 /**
  * @addtogroup stm32_examples
  * @{
  */
 
 /**
- * @addtogroup rtos
+ * @addtogroup rtos_semaphore
  * @{
  */
 
 /**
- * @defgroup rtos_exported_typedefs
+ * @defgroup rtos_semaphore_exported_typedefs
+ * @{
+ */
+
+/**
+ * @brief      Semaphore type
+ * @note
+ * @see
+ */
+typedef struct
+{
+  uint32_t semaphoreValue;        /**< Semaphore counter value */
+  RTOS_list_t waitingList;        /**< Waiting list of the semaphore */
+} RTOS_semaphore_t;
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup rtos_semaphore_exported_defines
  * @{
  */
 
@@ -67,7 +75,7 @@ extern "C" {
  */
 
 /**
- * @defgroup rtos_exported_defines
+ * @defgroup rtos_semaphore_exported_macros
  * @{
  */
 
@@ -76,21 +84,7 @@ extern "C" {
  */
 
 /**
- * @defgroup rtos_exported_macros
- * @{
- */
-
-/**
- * @brief   Memory word access
- */
-#define MEM32_ADDRESS(ADDRESS) (*((volatile unsigned long *)(ADDRESS)))
-
-/**
- * @}
- */
-
-/**
- * @defgroup rtos_exported_constants
+ * @defgroup rtos_semaphore_exported_constants
  * @{
  */
 
@@ -99,15 +93,18 @@ extern "C" {
  */
 
 /**
- * @defgroup rtos_exported_functions
+ * @defgroup rtos_semaphore_exported_functions
  * @{
  */
 
-void RTOS_init(void);
-void RTOS_schedulerStart(void);
-void RTOS_SVC_schedulerStart(void);
-void RTOS_SVC_Handler_main(uint32_t * svc_args);
-void RTOS_SysTick_Handler(void);
+void RTOS_semaphoreCreate(RTOS_semaphore_t * pSemaphore, uint32_t initialValue);
+void RTOS_SVC_semaphoreCreate(RTOS_semaphore_t * pSemaphore, uint32_t initialValue);
+
+uint32_t RTOS_semaphoreTake(RTOS_semaphore_t * pSemaphore, uint32_t waitFlag);
+uint32_t RTOS_SVC_semaphoreTake(RTOS_semaphore_t * pSemaphore, uint32_t waitFlag);
+
+void RTOS_semaphoreGive(RTOS_semaphore_t * pSemaphore);
+void RTOS_SVC_semaphoreGive(RTOS_semaphore_t * pSemaphore);
 
 /**
  * @}
@@ -124,4 +121,4 @@ void RTOS_SysTick_Handler(void);
 }
 #endif
 
-#endif /*__INC_RTOS_H_ */
+#endif /*__INC_RTOS_SEMAPHORE_H_ */
