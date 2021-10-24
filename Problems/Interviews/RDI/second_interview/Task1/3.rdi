@@ -1,0 +1,16 @@
+// this is test case 3
+{section1}
+// this is section 1
+var1="a   a"
+var2="b   b"
+
+var3="c   c"
+
+
+
+
+
+{section2}
+// this is section 2
+    var1=a                    a
+    var2=b                    b
