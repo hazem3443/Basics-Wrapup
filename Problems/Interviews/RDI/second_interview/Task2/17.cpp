@@ -11,71 +11,73 @@ using namespace std;
 
 void split_str( string const &str, const char delim, vector <string> &out );
 int compareStrings(string x, string y);
+int contains(string x,string y);
 
 int main() {
     
     ifstream MyReadFile("corpus.txt");
    
     string myText;
-   
-    size_t ix =0;
     
+    //parse file into a vector in order of sentences
     vector <string> mainlist ;
-    while (getline (MyReadFile, myText)) {
-        //iterate each line
-        vector <string> out; // store the string in vector  
-        //we can build a tree with chars relations and then add those trees by reference to a dictionary
-
-        split_str (myText, ' ', out); // call function to split the string     
-        for (int i = 0; i < out.size(); i++){
-            // cout<< out[i]<<endl;
-            mainlist.push_back(out[i]);
-        }
-        ix+=out.size();
-    }
-    // cout <<ix;
-    // Close the file
-    MyReadFile.close();
-    
-    //process the list
     map<string, int> main_map ;
 
-    for (int i = 0; i < mainlist.size(); i++){
-        // map<string, int>::iterator it;
-        // it = my_map.find(mainlist[i]);
-        // it[]
-        main_map.insert(pair<string,char>(mainlist[i],0));
-        // cout<< mainlist[i]<<endl;
+    while (getline (MyReadFile, myText)) {
+        vector <string> out; // store the string in vector
+        split_str (myText, ' ', out); // call function to split the string     
+        for (int i = 0; i < out.size(); i++){
+            mainlist.push_back(out[i]);
+    
+            //process the list into map of words without repetations
+            main_map.insert(pair<string,char>(out[i],0));
+        }
     }
-    // cout <<endl<<main_map.size()<<endl;
-    string in;
+    cout << mainlist.size() << endl;
+    cout << main_map.size() << endl;
 
+    MyReadFile.close();
+        
     //order words in the list and keep index of each word in file
+    
+    while(1){
+        string in;
+        map<string, int> match_word ,match_sentence ;
 
-    int resa = compareStrings("nev", "never");
-    // cout << resa << endl;
-    resa = compareStrings("nev", "saever");
-    // cout << resa << endl;
-    resa = compareStrings("nev", "aswnever");
-    // cout << resa << endl;
+        (cout <<endl<<"Please Type a Text then Press 'ENTER' : " )&& (cin>>in )&& (system("clear") );
+        
+        //fetch words matched
+        for (auto x : main_map)
+            if( compareStrings(in,x.first) )
+                match_word.insert(pair<string,int>(x.first,0));
 
-    map<string, int> match ;
-    do{
-        cout <<"Please Type a Text then Press 'ENTER' :"<<endl;
-        cin>>in;
-        system("clear");
-        for (int i = 0; i < mainlist.size(); i++){
-            if( compareStrings(in,mainlist[i])) 
-                match.insert(pair<string,char>(mainlist[i],0));
+        for (auto x : match_word) {
+            //search for the sentence start
+            for(int i = 0; i < mainlist.size(); i++){
+                string sentence;
+                if(mainlist[i] == x.first){//if find the word
+                    do{
+                        int j = i ;
+                        sentence.append(mainlist[i]).append(" ");
+                    }while( (!(contains(mainlist[i++],"\"?:;{<('-,.\n")) ));
+                    
+                    sentence.resize(sentence.size() - 1);
+
+                    if( (x.first.compare(sentence)) != 0)
+                        match_sentence.insert(pair<string,int>(sentence,0));
+                }
+            }
         }
 
-        for (auto x : match) {
-            cout << x.first << "\n";
-        }
-        // cout <<match.size() << endl;
+        cout << "Words:" ;
+        for (auto x : match_word)
+            cout << "\t\t"<<x.first << endl;
+
+        cout << endl <<"quote:" ;
+        for (auto x : match_sentence)
+            cout << "\t\t" << x.first <<endl;
     }
-    while(1);
-    return 0;
+   return 0;
 }
 
 void split_str( string const &str, const char delim, vector <string> &out )  
@@ -91,10 +93,19 @@ void split_str( string const &str, const char delim, vector <string> &out )
 }
 int compareStrings(string x, string y){
     int i=0;
-    while (x[i] == y[i])i++;
 
-    if(x.size() == i || y.size() == i){
+    while (x[i] == y[i])i++;
+    if(x.size() == i ){
         return 1;
     }
     else return 0;
+}
+
+int contains(string x,string y){
+    //checks string 1 is inside string 2
+    int res=0;    
+    for(int i=0;i < y.size();i++){
+        res += (x.find(y[i]) != string::npos);
+    }
+    return res;
 }
