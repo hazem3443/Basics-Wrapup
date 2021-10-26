@@ -1,11 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <unistd.h>
 #include <fstream>
 #include <sstream> 
-#include <regex>
+#include <map>
 
 using namespace std;
 
@@ -17,9 +15,9 @@ int main() {
     
     ifstream MyReadFile("corpus.txt");
    
-    string myText;
     
     //parse file into a vector in order of sentences
+    string myText;
     vector <string> mainlist ;
     map<string, int> main_map ;
 
@@ -28,19 +26,15 @@ int main() {
         split_str (myText, ' ', out); // call function to split the string     
         for (int i = 0; i < out.size(); i++){
             mainlist.push_back(out[i]);
-    
             //process the list into map of words without repetations
             main_map.insert(pair<string,char>(out[i],0));
         }
     }
-    cout << mainlist.size() << endl;
-    cout << main_map.size() << endl;
 
     MyReadFile.close();
         
-    //order words in the list and keep index of each word in file
-    
     while(1){
+        //order words in the list and keep index of each word in file
         string in;
         map<string, int> match_word ,match_sentence ;
 
@@ -83,10 +77,10 @@ int main() {
 void split_str( string const &str, const char delim, vector <string> &out )  
 {  
     // create a stream from the string  
-    std::stringstream s(str);  
+    stringstream s(str);  
         
-    std::string s2;  
-    while (std:: getline (s, s2, delim) )  
+    string s2;  
+    while (getline (s, s2, delim) )  
     {  
         out.push_back(s2); // store the string in s2  
     }  

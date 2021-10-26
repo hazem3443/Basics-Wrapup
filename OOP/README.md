@@ -54,18 +54,25 @@ JavaScript is not a class-based object-oriented language But it still has ways o
     }
   ```
 
-## 3. Constructors
+## 3. Constructors & Destructors
 
 - A constructor in C++ is a special method that is automatically called when an object of a class is created
+- Destructors is a special method that is automatically called when an object of a class is removed from memory or deleted from malloced memory which should be called within new or our script is going to delete it.
 - Example
-  
+
   ```cpp
-  class MyClass {     // The class
-      public:           // Access specifier
-          MyClass() {     // Constructor
-              cout << "Hello World!";
-          }
-  };
+    class MyClass {     // The class
+        public:           // Access specifier
+            //constructor
+            MyClass() {     // Constructor
+                cout << "object created!";
+            }
+            //destructor
+            ~MyClass() {     // Constructor
+                cout << "object destroyed!";
+            }
+    };
+  ```
 
 - **Note**: The constructor has the same name as the class, it is always public, and it does not have any return value.
 - constructors can also be defined outside the class, Just like functions (interfaces).
