@@ -18,7 +18,7 @@ is an acronym for the first five object-oriented design (OOD) principles by Robe
 A class should have one and only one reason to change, meaning that a class should have only one job.
 ```
 
-even it's a job is a method or a property of a defined class
+even it's job is a method or a property of a defined class
 
 **code example**:
 
@@ -285,7 +285,7 @@ Then q(y) should be provable for objects y of type S where S is a subtype of T.
 this pattern states that if an object B inherits from object A then all properties of type A is provable for objects of type B or can be handled without any problem
 
 for substituting
-talk(animal_obj) - animal_obj is an object of type animal and talk is a method can be applied to that object
+talk(animal_obj) - animal_obj is an object of type animal and talk is a method can be applied to that object  
 talk(bird_obj)   - bird_obj is an object of type bird and talk method can be applied to it where bird is a subtype of (inherits from) animal type
 
 it seems obvious that we didn't need to explain that but **This means that every subclass(child) or derived class should be substitutable(replacable) for their base or parent class.**which means child class have the parent method and properties
@@ -310,11 +310,9 @@ class VolumeCalculator extends AreaCalculator
 
 **remember** the method of **SumCalculatorOutputter** which can be applied to both area and volume classes which has **sum** method (can be inserted or implements this as interface) and each class implements it should has it
 
-so for conclusion on our example
+so for conclusion on our example  
 
-```markdown
-VolumeCalculator is subcalss of AreaCalculator then property SumCalculatorOutputter should be fine for both of them as they both have the same method **sum** but VolumeCalculator overrides it with it's implementation 
-```
+**VolumeCalculator** is subcalss of **AreaCalculator** then property **SumCalculatorOutputter** should be fine for both of them as they both have the same method **sum** but **VolumeCalculator** overrides it with it's implementation
 
 ---
 

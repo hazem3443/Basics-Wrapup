@@ -4,7 +4,6 @@ interface ShapeInterface
 {
     public function Area();
     public function dimension();
-    
 }
 interface ThreeDimensionalShapeInterface
 {
@@ -46,18 +45,21 @@ class shapeProperties {
 class Square implements ShapeInterface
 {
     public $length;
-    
+
     public function __construct($length)
     {
         $this->length = $length;
     }
-    public function Area(){
-        return pow($this->length, 2);        
+    public function Area()
+    {
+        return pow($this->length, 2);
     }
-    public function Volume(){
-        return $this->Area()*6;        
+    public function Volume()
+    {
+        return $this->Area() * 6;
     }
-    public function dimension(){
+    public function dimension()
+    {
         return $this->length;
     }
 }
@@ -77,9 +79,10 @@ class Cuboid extends Square implements ThreeDimensionalShapeInterface
     public function Volume()
     {
         // calculate the volume of the cuboid
-        return pow($this->dimension(),3);
+        return pow($this->dimension(), 3);
     }
-    public function dimension(){
+    public function dimension()
+    {
         return parent::dimension();
     }
 }
@@ -87,18 +90,21 @@ class Cuboid extends Square implements ThreeDimensionalShapeInterface
 class Circle implements ShapeInterface
 {
     public $radius;
-    
+
     public function __construct($radius)
     {
         $this->radius = $radius;
     }
-    public function Area(){
+    public function Area()
+    {
         return pi() * pow($this->radius, 2);
     }
-    public function Volume(){
-        return $this->Area()*(4/3)*$this->radius;        
+    public function Volume()
+    {
+        return $this->Area() * (4 / 3) * $this->radius;
     }
-    public function dimension(){
+    public function dimension()
+    {
         return $this->radius;
     }
 }
@@ -118,9 +124,10 @@ class Spheroid extends Circle implements ThreeDimensionalShapeInterface
     public function Volume()
     {
         // calculate the volume of the cuboid
-        return 4/3 * pi() * pow($this->dimension(),3);
+        return 4 / 3 * pi() * pow($this->dimension(), 3);
     }
-    public function dimension(){
+    public function dimension()
+    {
         return parent::dimension();
     }
 }
@@ -136,7 +143,7 @@ class AreaCalculator
     public function sum()
     {
         foreach ($this->shapes as $shape) {
-            if(is_a($shape, 'ShapeInterface')){
+            if (is_a($shape, 'ShapeInterface')) {
                 $area[] = $shape->Area();
                 continue;
             }
@@ -145,7 +152,6 @@ class AreaCalculator
 
         return array_sum($area);
     }
-    
 }
 //this scope is for explaining interface way to satisfy open-close principal
 /*
@@ -171,7 +177,7 @@ class VolumeCalculator extends AreaCalculator
     {
         // logic to calculate the volumes and then return an array of output
         foreach ($this->shapes as $shape) {
-            if(is_a($shape, 'ShapeInterface')){
+            if (is_a($shape, 'ShapeInterface')) {
                 $summedvolume[] = $shape->Volume();
                 continue;
             }
@@ -194,8 +200,8 @@ class SumCalculatorOutputter
     public function JSON()
     {
         $data = [
-          'sum' => $this->calculator->sum(),
-      ];
+            'sum' => $this->calculator->sum(),
+        ];
 
         return json_encode($data);
     }
@@ -203,16 +209,16 @@ class SumCalculatorOutputter
     public function HTML()
     {
         return implode('', [
-          '',
-              "Sum of the areas of provided shapes: ",
-              $this->calculator->sum(),
-          '',
-      ]);
+            '',
+            "Sum of the areas of provided shapes: ",
+            $this->calculator->sum(),
+            '',
+        ]);
     }
 }
 $shapes = [
-  new Square(5),
-  new Circle(4.5)
+    new Square(5),
+    new Circle(4.5)
 ];
 
 // $areas = new AreaCalculator($shapes);
@@ -247,27 +253,25 @@ $shapes = [
 // echo "\nthis area :\n".$i->HTML();
 
 $cube1 = new Cuboid(5);
-echo "\ncube l = ". $cube1->dimension();
-echo "\ncube surface Area = ". $cube1->Area();
-echo "\ncube Volume l = ". $cube1->Volume();
+echo "\ncube l = " . $cube1->dimension();
+echo "\ncube surface Area = " . $cube1->Area();
+echo "\ncube Volume l = " . $cube1->Volume();
 
 $sphere1 = new Spheroid(5);
-echo "\nsphere l = ". $sphere1->dimension();
-echo "\nsphere surface Area = ". $sphere1->Area();
-echo "\nsphere Volume l = ". $sphere1->Volume();
+echo "\nsphere l = " . $sphere1->dimension();
+echo "\nsphere surface Area = " . $sphere1->Area();
+echo "\nsphere Volume l = " . $sphere1->Volume();
 
 $SolidShapes = [$cube1, $sphere1];
 $areas = new AreaCalculator($SolidShapes);
-$volumes= new VolumeCalculator($SolidShapes);
-echo "\n".$areas->sum();
-echo "\n".$volumes->sum();
+$volumes = new VolumeCalculator($SolidShapes);
+echo "\n" . $areas->sum();
+echo "\n" . $volumes->sum();
 
 $out1 = new SumCalculatorOutputter($areas);
-echo "\n".$out1->HTML();
-echo "\n".$out1->JSON();
+echo "\n" . $out1->HTML();
+echo "\n" . $out1->JSON();
 
 $out2 = new SumCalculatorOutputter($volumes);
-echo "\n".$out2->HTML();
-echo "\n".$out2->JSON();
-
-?>
+echo "\n" . $out2->HTML();
+echo "\n" . $out2->JSON();
