@@ -19,7 +19,7 @@ RTOS_SVC_Handler:
     bl RTOS_SVC_Handler_main  /* Run C part of SVC Handler */
     ldr r1,=svcEXEReturn      /* Load the address of svcEXEReturn in r1 */
     ldr lr,[r1]               /* Load lr with updated svcEXEReturn value */
-    bx lr                     /* Return */
+    bx lr                     /* Return from interrupt */
 
 .type RTOS_PendSV_Handler, %function
 RTOS_PendSV_Handler:
@@ -33,7 +33,7 @@ RTOS_PendSV_Handler:
     mov r2, lr                /* Store lr in r2 */
     mrs r3, control           /* Store control in r3 */
     stmdb r1!,{r2-r11}        /* Store multiple registers (r2 to r11).
-                                 Decrement address before each access. ! for write back */
+                                 Decrement address before each access. ! for write back into address of r1 which will be in stack of this thread scope*/
     bl RTOS_threadGetRunning  /* Get current running thread location */
     str r1,[r0]               /* Store the stack pointer for the current thread  */
     /* ******************** */

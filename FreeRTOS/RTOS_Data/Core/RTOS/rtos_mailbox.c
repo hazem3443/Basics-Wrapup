@@ -117,7 +117,7 @@ static void checkWaitingThreads(RTOS_mailbox_t * pMailbox)
   /* Check if threads are waiting for the data */
   if(0 < pMailbox->waitingList.numOfItems)
   {
-    /* Get first one */
+    /* Get first one which is ordered by item value in the waiting list */
     pThread = pMailbox->waitingList.listEnd.pNext->pThread;
 
     /* Check returned thread */
@@ -219,6 +219,10 @@ uint32_t RTOS_mailboxWrite(RTOS_mailbox_t * pMailbox, uint32_t waitFlag,
   /* Return status */
   uint32_t returnStatus = 0;
 
+  //TODO:we need to make mutex like scope here in order to be able to increase and decrease SVC interrupt priority
+  /* here we rely on that SVC interrupt have the highest priority so no one can preempt its operation so no problem for now but for
+  	 more dynamic operation we need do it execlusively :D
+  */
   /* Check if there is a free place to write */
   if(pMailbox->bufferLength > pMailbox->messagesNum)
   {
@@ -256,7 +260,7 @@ uint32_t RTOS_mailboxWrite(RTOS_mailbox_t * pMailbox, uint32_t waitFlag,
   /* Check waiting flag and return status */
   if((1 == waitFlag) && (1 != returnStatus))
   {
-    /* Block current thread */
+    /* Block current thread or move it to waiting list*/
     blockCurrentThread(pMailbox);
 
     /* Return to SVC as indication of context switch */

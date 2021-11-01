@@ -164,6 +164,25 @@ void RTOS_threadInitLists(void)
  * @note
  * @param   RTOS_thread_t *, RTOS_stack_t *, uint32_t, void *, char *
  * @retval  None
+ *
+ * first parameter will contain the thread structure block in the bss section
+ * second will contain the end of stack block in the bss section
+ * third will contain the priority as number
+ * fourth the function address in flash
+ *
+ * 0x2000 0000 .bss which will contain the stack of each thread which will be allocated by compiler
+ *
+ * 0x2000 0058 thread-pointer
+ * 0x2000 0078 thread-stack-end-pointer
+ * ....
+ * 0x2000 0078 +512*8(0x400) = 0x2000 1078  thread-stack-start-pointer
+ * ...
+ * 0x2005 0000 ->MSP
+ *
+ *
+ *some times the function need to save it's LR in stack in order to identify it's working stack scope before branching
+ *
+ *this function is going to initiate the thread block and attach it to it's item in a ready list at a certain priority index in the ready list
  */
 void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
     uint32_t priority, void * pFunction)
@@ -176,7 +195,7 @@ void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
 
   /* Create stack frame, size multiplied with 8 for the double word
    * length converted to byte length, stack f16<<4 =rame size is 18 words */
-  pThread->pStackPointer = ((uint32_t)pStack + THREAD_STACK_SIZE * 8 - 18 * 4);
+  pThread->pStackPointer = ((uint32_t)pStack + (THREAD_STACK_SIZE * 8) - (18 * 4));
 
   /*---shifting technique
    * shifting by 2 means shift the current number by 2 steps of pStackPointer type which is uint_32
@@ -214,7 +233,10 @@ void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
   MEM32_ADDRESS((pThread->pStackPointer + (17 << 2))) = 0x01000000;
 
   /* Write EXC_RETURN, since the execution threads are using PSP, this will
-   * allow SVC to return to the thread with PSP */
+   * allow SVC to return to the thread with PSP
+   * F9 means MSP
+   * FD means PSP
+   * */
   MEM32_ADDRESS(pThread->pStackPointer) = 0xFFFFFFFDUL;
 
   /* Write initial CONTROL register value UNPRIVILEGED, PSP & no FPU */
@@ -274,17 +296,18 @@ void RTOS_threadSwitchRunning(void)
   pReadyList->pIndex = pReadyList->pIndex->pNext;
 
   /* Check if the new index pointing to the end of the list */
-  while ((pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)||( (readyList[currentTopPriority].numOfItems>1) && ( (RTOS_listItem_t *)pReadyList->pIndex == &idleThread.item ) ))
+//  while ((pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)||( (readyList[currentTopPriority].numOfItems>1) && ( (RTOS_listItem_t *)pReadyList->pIndex == &idleThread.item ) ))
+  if(pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)
   {
 	/* Get the next thread */
 	pReadyList->pIndex = pReadyList->pIndex->pNext;
   }
-//  else
-//  {
-//	/* Do nothing, index is not pointing to the end */
-//  }
+  else
+  {
+	/* Do nothing, index is not pointing to the end */
+  }
 
-  /* Update current running thread */
+  /* Update global current running thread */
   pRunningThread = (RTOS_thread_t *)pReadyList->pIndex->pThread;
 
   /* Update current running thread */

@@ -372,12 +372,44 @@ here also we need to fetch the highest priority thread and set it to the running
         between different threads.
   ![c EXECLUSIVE ACCESS INSTRUCTIONS](c_EXECLUSIVE_ACCESS_INSTRUCTIONS.png)
 
+- Mutex codeing tips
+  - it consists of a **structure** having a mutex value and mutex list which contains thread items want to lock this mutex or take it while it is already locked by another thread
+
+    ```C
+      typedef struct
+      {
+        uint32_t mutexValue;            /**< Mutex value */
+        RTOS_list_t waitingList;        /**< Waiting list of the mutex */
+      } RTOS_mutex_t;
+    ```
+  
+  - then we have a **RTOS_SVC_mutexCreate** function that takes in
+    - **mutex structure**
+      - this structure contains the waiting list and the mutex value which will be the flag going to be taken and release
+      - **wait flag**
+        - this value represents waiting state while this flag is been taken so if another thread want to lock this mutex while it is been alreadt locked then this thread will be removed from ready list and will be added to waiting list in order of **item value**
+    - **function operation**
+      - this function going to enter in a while loop and only will get out of it only when lockeing the mutex or found it is already locked
+        - if it succedded locking the mutex means perform **__LDREXW** and **__STREXW** successfully and **mutexValue = 0** it will return with **return status 1**
+        - if it found that this mutex already locked then it will move this thread from ready list to waiting list localized in mutex structure (meaning waiting list is local to mutex scope :D ) and will return with **return status 2** meaning that it will try locking the mutex again after context switching this happen by moving **PC** of this thread to **PC-2** which means calling svc instruction with mutex lock command performing locking operations again
+  - then we have **RTOS_mutexRelease** function which takes in the mutex structure
+    - **function operation**
+      - this function only releases the **mutexValue =1** and move the next thread in waiting list or the highest itemValue inside the waiting list (ordered descending from lets say 10 to 0 also on each insert it inserts it in order keeping its item value order) ,it moves the highest item in waiting list to the ready list in order to be executed whcih its' PC points at svc instruction and will try locking the mutex again meaning that all threads in the waiting list will do the same operation
+
+  - **notice that we can't nest mutexes blocks between lock and release avoid moving the same thread item into two waiting list of second mutex** and retrieving it back into the ready list within the same block which will casue the second mutex lock to remove the thread item from the first mutex waiting list to the second mutex waiting list causing a the control of this thread moving to second mutex and first mutex will be empty or a dummy mutex and its release will retrieve none from the waiting list means it has no purpose
+
 ### **Semaphore**
   
 - Resources can be shared between limited number of threads
 - Mutex is a binary flag and can be extended to a counter to support access from multiple threads.
 - semaphore is functionally similar to the mutex but with counter
 - mutex is considered a binary semaphore
+
+semaphore is the same as mutex except that we didn't check its binary value so on each give it will safely increment semaphore value while in take it will decrement it's value and while its creation we can set its value and the same as moving it to the waiting list while there is a thread wants to take that semaphore while it is already taken or its value can't be taken because of its condition which for us is that the semaphore is == 0 :D we can change that and pass it to our function but till now it is very enough then while giving this semaphore we retrieve the items in the waiting list of this semaphore to the ready list in order to retry taking the semaphore again :D
+  
+notice that we can't nest different semaphores becasue the second one will have the control of the threads in the waiting list and first one will be a dummy semaphore and we can't depend on it, because it will be detaced from the real thread scope
+  
+also notice that we can depend on that the **SVC** interrupt have the highest priority so no interrupt will preempt this operation and no one can racing this one while it is running but if we used NVIC to reduce its priority then we will found an issue and we will need to make it a critical section by disabling interrupts before and after setting mutex or semaphore value but that will issue a problem which causing the interrupt to be delayed which may be a critical event so this is not an efficient one and hence we really need to use **exclusive operations** in order to add dynamic configuration for our RTOS which enables increasing and decreasing priority of svc interrupt according to our application
 
 ### **Mailbox**
 
@@ -387,6 +419,10 @@ here also we need to fetch the highest priority thread and set it to the running
 - shared buffer needs to be updated by the producer and consumer mutually execlusively, so mutex is need for mutual exclusive access to the buffer and semaphore for counting number of messages in the buffer.
 - buffer has limited size, producer can not fill the buffer infinitely, so another semaphore is needed for counting the empty slots in the buffer.
 - can be implemented using queue and number of data in queue can be represented by semaphore.
+
+it is nothing more than a QUEUE but it's **ENQUEUE and DEQUEUE** operations need to happen in a safe manner so we can make this operation inside mutex block or mutex like functions in order to notice each thread with a live version of queue buffer and avoid racing on the buffer also when state-machine programming come into the picture we can use maibox for message notification or event message that moves the operation between different states
+  
+**Notice** we need to avoid nesting mutexes ,semaphores and maiboxes to avoid moving running thread into the last waiting list scope of the last called block(mutexes ,semaphores and maiboxes) which detaches scopes from its logical operation which make it with no effect or its effect will rely on other scopes so as functional component it will not have a concurrent functional operation so take care of this while implementing your app using this RTOS
 
 ---
 

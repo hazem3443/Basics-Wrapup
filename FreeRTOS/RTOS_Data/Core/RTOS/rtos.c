@@ -331,13 +331,17 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
       if(2 == returnStatus)
       {
         /* Context switch was triggered, update program counter,
-         * when the context is restored the thread will try again */
+         * when the context is restored the thread will try again and call svc 3 again because
+         * svc_args[6] contains the next instruction after current PC (which will point at bx lr) stacked in ram
+         * so changing it to svc_args[6] - 2 will make it point to svc 3 meaning try again after stacking with
+         * the same parameters stacked earlier in ram and 2 because of thumb instruction contains 16-bit instruction
+         * and 2*8 or two chars will make it point correctly to svc 3 instruction*/
         svc_args[6] = svc_args[6] - 2;
       }
       else
       {
         /* No context switch was triggered, pass return value */
-        svc_args[0] = returnStatus;
+        svc_args[0] = returnStatus;//to enable mutex release to know its previous value
       }
     break;
 

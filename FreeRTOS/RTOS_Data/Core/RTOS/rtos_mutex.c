@@ -130,6 +130,8 @@ void RTOS_mutexCreate(RTOS_mutex_t * pMutex, uint32_t initialValue)
  * @note
  * @param   RTOS_mutex_t *, uint32_t
  * @retval  uint32_t
+ * ret = 1 means locked successfully
+ *  2 means already locked by another thread move the current thread from ready list to waiting list and switch to the next thread
  */
 uint32_t RTOS_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag)
 {
@@ -151,7 +153,7 @@ uint32_t RTOS_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag)
   {
     /* Check mutex value, note in ARMv7-M exceptions automatically clear the
      * exclusive state in the local monitor, no need to use CLREX instruction */
-    if(1 == __LDREXW(&pMutex->mutexValue))
+    if(1 == __LDREXW(&pMutex->mutexValue))//if ==0 means another thread already take this mutex
     {
       /* Mutex is free, locked it */
       if(0 == __STREXW(0, &pMutex->mutexValue))
@@ -178,6 +180,9 @@ uint32_t RTOS_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag)
   }
 
   /* Check waiting flag and return status */
+  /*if another thread takes this mutex then we need to remove this from ready list
+   * and context switch to another thread till that thread release the mutex
+   */
   if((1 == waitFlag) && (1 != returnStatus))
   {
     /* Get current running thread */
@@ -186,7 +191,7 @@ uint32_t RTOS_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag)
     /* Remove current thread from ready list */
     RTOS_listRemove(&pRunningThread->item);
 
-    /* Put current thread into the waiting list */
+    /* Put current thread into the waiting list in order of itemvalue as ordering parameter instead of priority*/
     RTOS_listInsert(&pMutex->waitingList, &pRunningThread->item);
 
     /* Trigger context switch, set PendSV to pending */
@@ -209,6 +214,9 @@ uint32_t RTOS_mutexLock(RTOS_mutex_t * pMutex, uint32_t waitFlag)
  * @note
  * @param   RTOS_mutex_t *
  * @retval  None
+ *
+ * make the mutex value by 1 and move first thread in the waiting list to ready list which contains (svc_args[6] - 2)
+ * or will return to svc 3 trying to lock the mutex and move on
  */
 void RTOS_mutexRelease(RTOS_mutex_t * pMutex)
 {
