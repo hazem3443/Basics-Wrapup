@@ -366,7 +366,7 @@ here also we need to fetch the highest priority thread and set it to the running
     - Mutex lock and release operations are RTOS responsibility and shall be implemented using RTOS calls.
   ![Mutex implementation using ARMCM3](Mutex_implementation_using_ARMCM3.png)
     - The processor removes its exclusive access tag if:
-      - It executes a CLREX instruction
+      - It executes a **CLREX** instruction
       - It executes a Store-Exclusive instruction, regardless of whether the write succeeds.
       - An exception occurs. This means the processor can resolve semaphore conflicts
         between different threads.
@@ -387,14 +387,14 @@ here also we need to fetch the highest priority thread and set it to the running
     - **mutex structure**
       - this structure contains the waiting list and the mutex value which will be the flag going to be taken and release
       - **wait flag**
-        - this value represents waiting state while this flag is been taken so if another thread want to lock this mutex while it is been alreadt locked then this thread will be removed from ready list and will be added to waiting list in order of **item value**
+        - this value represents waiting state while this flag is been taken so if another thread want to lock this mutex while it is been alreadt locked then this thread will be removed from ready list and will be added to waiting list in order of **item value** ascendingly
     - **function operation**
       - this function going to enter in a while loop and only will get out of it only when lockeing the mutex or found it is already locked
         - if it succedded locking the mutex means perform **__LDREXW** and **__STREXW** successfully and **mutexValue = 0** it will return with **return status 1**
         - if it found that this mutex already locked then it will move this thread from ready list to waiting list localized in mutex structure (meaning waiting list is local to mutex scope :D ) and will return with **return status 2** meaning that it will try locking the mutex again after context switching this happen by moving **PC** of this thread to **PC-2** which means calling svc instruction with mutex lock command performing locking operations again
   - then we have **RTOS_mutexRelease** function which takes in the mutex structure
     - **function operation**
-      - this function only releases the **mutexValue =1** and move the next thread in waiting list or the highest itemValue inside the waiting list (ordered descending from lets say 10 to 0 also on each insert it inserts it in order keeping its item value order) ,it moves the highest item in waiting list to the ready list in order to be executed whcih its' PC points at svc instruction and will try locking the mutex again meaning that all threads in the waiting list will do the same operation
+      - this function only releases the **mutexValue =1** and move the next thread in waiting list or the lowest itemValue inside the waiting list (ordered ascending from lets say 0 to 10 also on each insert it inserts it in order keeping its item value order) ,it moves the lowest itemValue in waiting list to the ready list in order to be executed which its' PC points at svc instruction and will try locking the mutex again meaning that all threads in the waiting list will do the same operation
 
   - **notice that we can't nest mutexes blocks between lock and release avoid moving the same thread item into two waiting list of second mutex** and retrieving it back into the ready list within the same block which will casue the second mutex lock to remove the thread item from the first mutex waiting list to the second mutex waiting list causing a the control of this thread moving to second mutex and first mutex will be empty or a dummy mutex and its release will retrieve none from the waiting list means it has no purpose
 
@@ -407,7 +407,7 @@ here also we need to fetch the highest priority thread and set it to the running
 
 semaphore is the same as mutex except that we didn't check its binary value so on each give it will safely increment semaphore value while in take it will decrement it's value and while its creation we can set its value and the same as moving it to the waiting list while there is a thread wants to take that semaphore while it is already taken or its value can't be taken because of its condition which for us is that the semaphore is == 0 :D we can change that and pass it to our function but till now it is very enough then while giving this semaphore we retrieve the items in the waiting list of this semaphore to the ready list in order to retry taking the semaphore again :D
   
-notice that we can't nest different semaphores becasue the second one will have the control of the threads in the waiting list and first one will be a dummy semaphore and we can't depend on it, because it will be detaced from the real thread scope
+notice that we can't nest different semaphores becasue the second one will have the control of the threads in the waiting list and first one will be a dummy semaphore and we can't depend on it, because it will be detached from the real thread scope
   
 also notice that we can depend on that the **SVC** interrupt have the highest priority so no interrupt will preempt this operation and no one can racing this one while it is running but if we used NVIC to reduce its priority then we will found an issue and we will need to make it a critical section by disabling interrupts before and after setting mutex or semaphore value but that will issue a problem which causing the interrupt to be delayed which may be a critical event so this is not an efficient one and hence we really need to use **exclusive operations** in order to add dynamic configuration for our RTOS which enables increasing and decreasing priority of svc interrupt according to our application
 
@@ -427,6 +427,50 @@ it is nothing more than a QUEUE but it's **ENQUEUE and DEQUEUE** operations need
 ---
 
 ## **Timer Support**
+
+### why we need timer support?
+
+- threads normally do some actions and wait for respose such as sensor transmit the requested data
+- external hardware like sensors are outside the control of our software
+- using timers allows threads to wait only for a specific timeout instead of waiting forever if the sensor is not responding anymore, the software then can take recovery actions.
+- threads also may need to stop processing such as delays waiting for some events and timeouts. (such as cooperative kernels)
+
+### Synchronization Events with timer support
+
+- threads whcih want to wait for some time are added into a timer list.
+- threads can be also waiting for other synchronization events such as mutex.
+- if the sync event happended or timeout, then threads are moved to the ready list and removed from waiting lists of the timer and the sync event.
+- timer list shall be refreshed each tick event and the sync event waiting list shall be also refreshed in case of a timeout.
+
+![MUTEX LOCK_WITH TIMER SUPPORT](MUTEX_LOCK_WITH_TIMER_SUPPORT.png)
+
+### RTOS Lists with Timer Support
+
+![RTOS LISTS WITH TIMER SUPPORT](RTOS_LISTS_WITH_TIMER_SUPPORT.png)
+
+### thread Destroy
+
+- removes the thread completely from the RTOS system, i.e from ready list , timer list and all other synchronization events lists
+- the running thread (supervisor) can terminate itself, or any other thread. it can also create new threads as well.
+- supervisor thread shall make sure the terminated thread does not hold any RTOS resources (mutex, semaphore, etc.)
+
+### Key Notes
+
+- till now  we have 4 lists
+  - **Running list** this list contains the running thread in case on single core and a multiple threads in case of a multicore
+  - **Ready list** which is the lists ready to be running in the next tick ordered accordingly to item value and priority where each priority have a list of threads at this priority running circularly in order according to itemValue
+  - **Waiting list** this list is local to scope of waiting event which represent waiting for a certain mutex, semaphore or maibox buffer so each object of those have a waiting list on that resource but what if the waiting is on the cpu resource? here comes timer list
+  - **Timer list** this list contains items ordered ascendingly according to waiting time which is been passed to item value in order to prioritize them for time delay value
+
+from those lists we notice that each thread may need to wait for a certain time on a certain resource so what we can do ?
+
+can we move the same item to waiting and timer list ?
+
+we ain't do that because while any event have come wheather it is time event or mutex relase we can move this item to ready list but how can we move the same item to two different lists without modifying the **list item structure** ? becasue each item only points to one list
+
+we can make or tie each thread to two list items **generic_list_item** and **event_list_item** and we can move generic_list_item between ready and timer list which is global to our RTOS structure and move event_list_item into local resource waiting list such as mutex, semaphore and mailbox and with the help of that structure we can add the same thread into two different lists event list and timer list which enables us to add timeout cabability to our events or waiting lists
+
+- thread destroy cabability allows us to remove the thread from our main RTOS scheduler list but it's structure is still localized in our .bss in RAM so that would help us to retrive and add it againg into running list by recreating it again but we need to check that its thread id is not re-initialize again in order to trach it correctly in the thread analyzing tools such as **Tracealyzer**
 
 ---
 
