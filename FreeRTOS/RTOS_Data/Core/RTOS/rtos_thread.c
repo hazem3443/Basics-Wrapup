@@ -25,7 +25,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
 /* Includes */
-#include "../RTOS/Inc/rtos.h"
+#include "Inc/rtos.h"
 
 /**
  * @addtogroup rtos
@@ -83,21 +83,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
  * @brief   Ready list for the threads waiting for the execution,
  *          arranged by priority.
  */
-static RTOS_list_t readyList[THREAD_PRIORITY_LEVELS];
+static RTOS_list_t readyList[THREAD_PRIORITY_LEVELS]; //array of lists ordered by priority levels
+
+/**
+ * @brief   Timer list for the threads waiting, arranged by timeout value.
+ */
+static RTOS_list_t timerList;//will be ordered according to timeout value
 
 /**
  * @brief   Current top priority.
  */
 static uint32_t currentTopPriority = (THREAD_PRIORITY_LEVELS - 1);
-
-/**
- * @}
- */
-
-/**
- * @defgroup rtos_thread_exported_variables
- * @{
- */
 
 /**
  * @brief   Currently running thread pointer.
@@ -114,9 +110,11 @@ static uint32_t runningThreadID = 0;
  */
 static uint32_t numOfThreads = 0;
 
+/**
+ * @brief   Variable to store millisecond ticks
+ */
+static volatile uint32_t sysTickCounter = 0;
 
-extern RTOS_thread_t idleThread;
-extern RTOS_stack_t idleThreadStack;
 /**
  * @}
  */
@@ -157,6 +155,8 @@ void RTOS_threadInitLists(void)
   {
     RTOS_listInit(&readyList[priority]);
   }
+  /* Initialize timer list */
+  RTOS_listInit(&timerList);
 }
 
 /**
@@ -245,20 +245,75 @@ void RTOS_threadCreate(RTOS_thread_t * pThread, RTOS_stack_t * pStack,
   /* Set thread priority */
   pThread->priority = priority;
 
-  /* Increment number of threads and set the thread ID */
-  pThread->threadID = ++numOfThreads;
+  /* Increment number of threads and set the thread ID we made that check only to know if this thread was previously created in order to
+   * set its id or not*/
+  if (0 == pThread->threadID)
+  {
+	  pThread->threadID = ++numOfThreads;
+  }
+  else
+  {
+	  /* Do nothing, this thread was re-created */
+  }
 
   /* Thread is not yet in any list */
-  pThread->item.pList = NULL;
+  pThread->genericListItem.pList = NULL;
+  pThread->eventListItem.pList = NULL;
 
   /* Link this thread with its list item */
-  pThread->item.pThread = (void *) pThread;
+  pThread->genericListItem.pThread = (void *)pThread;
+  pThread->eventListItem.pThread = (void *)pThread;
 
   /* Set item value to the priority -- extra ordering value to order items with the same priority*/
-  pThread->item.itemValue = priority;
+  pThread->eventListItem.itemValue = priority;
 
   /* Add new thread to ready list */
   RTOS_threadAddToReadyList(pThread);
+}
+
+/**
+ * @brief   Destroys a thread
+ * @note
+ * @param   RTOS_thread_t *
+ * @retval  None
+ */
+void RTOS_threadDestroy(RTOS_thread_t *pThread)
+{
+  /* Check input parameters */
+  ASSERT(NULL != pThread);
+
+  /* Check if the generic list item in any list */
+  if (NULL != pThread->genericListItem.pList)
+  {
+    /* Remove the generic list item from the current list */
+    RTOS_listRemove(&pThread->genericListItem);
+  }
+  else
+  {
+    /* Do nothing, generic list item is not in any list */
+  }
+
+  /* Check if the event list item in any list */
+  if (NULL != pThread->eventListItem.pList)
+  {
+    /* Remove the event list item from the current list */
+    RTOS_listRemove(&pThread->eventListItem);
+  }
+  else
+  {
+    /* Do nothing, event list item is not in any list */
+  }
+
+  /* Check if the removed thread is the current thread */
+  if (pThread == pRunningThread)
+  {
+    /* The current thread will be removed, request context switch  */
+    SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+  }
+  else
+  {
+    /* Do nothing */
+  }
 }
 
 /**
@@ -296,7 +351,6 @@ void RTOS_threadSwitchRunning(void)
   pReadyList->pIndex = pReadyList->pIndex->pNext;
 
   /* Check if the new index pointing to the end of the list */
-//  while ((pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)||( (readyList[currentTopPriority].numOfItems>1) && ( (RTOS_listItem_t *)pReadyList->pIndex == &idleThread.item ) ))
   if(pReadyList->pIndex == (RTOS_listItem_t *)&pReadyList->listEnd)
   {
 	/* Get the next thread */
@@ -326,7 +380,7 @@ void RTOS_threadAddToReadyList(RTOS_thread_t *pThread)
   ASSERT(NULL != pThread);
 
   /* Add new thread to ready list */
-  RTOS_listInsertEnd(&readyList[pThread->priority], &pThread->item);
+  RTOS_listInsertEnd(&readyList[pThread->priority], &pThread->genericListItem);
 
   /* Set current top priority */
   if (pThread->priority < currentTopPriority)
@@ -345,6 +399,116 @@ void RTOS_threadAddToReadyList(RTOS_thread_t *pThread)
   {
     /* Context switch is not required */
   }
+}
+
+/**
+ * @brief   Refresh the timer list
+ * @note
+ * @param   None
+ * @retval  None
+ */
+void RTOS_threadRefreshTimerList(void)
+{
+  /* Pointer to the unblocked thread */
+  RTOS_thread_t *pThread;
+
+  /* Check scheduler status */
+  if (1 == RTOS_isSchedulerRunning())
+  {
+    /* Increment SysTick counter */
+    ++sysTickCounter;
+
+    /* Check SysTick counter overflow */
+    if (0 == sysTickCounter)
+    {
+      /* TODO: Handle counter overflow */
+      ASSERT(0);
+    }
+    else
+    {
+      /* No counter overflow, do nothing */
+    }
+
+    /* Check if timer list has threads waiting */
+    if (0 < timerList.numOfItems)
+    {
+      /* Timer list is not empty, check timeout values */
+      while (sysTickCounter >= timerList.listEnd.pNext->itemValue)
+      {
+        /* Get first thread waiting */
+        pThread = timerList.listEnd.pNext->pThread;
+
+        /* Check returned thread */
+        ASSERT(NULL != pThread);
+
+        /* Thread timeout, remove from timer list */
+        RTOS_listRemove(&pThread->genericListItem);
+
+        /* Check if the thread waiting for synchronization event */
+        if (NULL != pThread->eventListItem.pList)
+        {
+          /* Remove the thread from the event list */
+          RTOS_listRemove(&pThread->eventListItem);
+        }
+        else
+        {
+          /* Do nothing, this thread is not in any event lists */
+        }
+
+        /* Add the returned thread into ready list */
+        RTOS_threadAddToReadyList(pThread);
+      }
+    }
+    else
+    {
+      /* Timer list is empty, do nothing */
+    }
+  }
+  else
+  {
+    /* Scheduler is not running, do nothing */
+  }
+}
+
+/**
+ * @brief   Add thread to the timer list
+ * @note
+ * @param   None
+ * @retval  None
+ */
+void RTOS_threadAddRunningToTimerList(uint32_t waitTime)
+{
+  /* Check input parameters */
+  ASSERT(0 != waitTime);
+
+  /* Temp variable for the wake up tick */
+  uint32_t wakeUpTick = 0;
+
+  /* Calculate wake up tick */
+  wakeUpTick = sysTickCounter + waitTime;
+
+  /* Check counter overflow */
+  if (sysTickCounter > wakeUpTick)
+  {
+    /* TODO: Handle overflow */
+    ASSERT(0);
+  }
+  else
+  {
+    /* No overflow, do nothing */
+  }
+
+  /* Set generic list item value */
+  pRunningThread->genericListItem.itemValue = wakeUpTick;
+
+  /* Remove from ready list */
+  RTOS_listRemove(&pRunningThread->genericListItem);
+
+  /* Add to timer list */
+  RTOS_listInsert(&timerList, &pRunningThread->genericListItem);
+
+  /* Trigger context switch, set PendSV to pending */
+  SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 }
 
 /**

@@ -8,21 +8,21 @@
  * @brief   RTOS Mailbox
  * @note
  *
-@verbatim
-Copyright (C) Almohandes.org, 2019
+ @verbatim
+ Copyright (C) Almohandes.org, 2019
 
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or any later version.
+ This program is free software: you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation, either version 3 of the License, or any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful, but WITHOUT
+ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>.
-@endverbatim
-*******************************************************************************/
+ You should have received a copy of the GNU General Public License along with
+ this program.  If not, see <http://www.gnu.org/licenses/>.
+ @endverbatim
+ *******************************************************************************/
 
 /* Define to prevent recursive inclusion */
 #ifndef __INC_RTOS_MAILBOX_H_
@@ -55,16 +55,15 @@ extern "C" {
  * @note
  * @see
  */
-typedef struct
-{
-  int8_t * pStart;          /**< Start location */
-  int8_t * pEnd;            /**< Last location */
-  int8_t * pReadIndex;      /**< Read location */
-  int8_t * pWriteIndex;     /**< Write location */
-  uint32_t bufferLength;    /**< Length of the mailbox buffer */
-  uint32_t messageSize;     /**< Mailbox message size in bytes */
-  uint32_t messagesNum;     /**< Current number of messages inside the buffer */
-  RTOS_list_t waitingList;  /**< Waiting list */
+typedef struct {
+	int8_t *pStart; /**< Start location */
+	int8_t *pEnd; /**< Last location */
+	int8_t *pReadIndex; /**< Read location */
+	int8_t *pWriteIndex; /**< Write location */
+	uint32_t bufferLength; /**< Length of the mailbox buffer */
+	uint32_t messageSize; /**< Mailbox message size in bytes */
+	uint32_t messagesNum; /**< Current number of messages inside the buffer */
+	RTOS_list_t waitingList; /**< Waiting list */
 } RTOS_mailbox_t;
 
 /**
@@ -103,20 +102,20 @@ typedef struct
  * @{
  */
 
-void RTOS_mailboxCreate(RTOS_mailbox_t * pMailbox, void * pBuffer,
-    uint32_t bufferLength, uint32_t messageSize);
-void RTOS_SVC_mailboxCreate(RTOS_mailbox_t * pMailbox, void * pBuffer,
-    uint32_t bufferLength, uint32_t messageSize);
+void RTOS_mailboxCreate(RTOS_mailbox_t *pMailbox, void *pBuffer,
+		uint32_t bufferLength, uint32_t messageSize);
+void RTOS_SVC_mailboxCreate(RTOS_mailbox_t *pMailbox, void *pBuffer,
+		uint32_t bufferLength, uint32_t messageSize);
 
-uint32_t RTOS_mailboxWrite(RTOS_mailbox_t * pMailbox, uint32_t waitFlag,
-    const void * const pMessage);
-uint32_t RTOS_SVC_mailboxWrite(RTOS_mailbox_t * pMailbox, uint32_t waitFlag,
-    const void * const pMessage);
+uint32_t RTOS_mailboxWrite(RTOS_mailbox_t *pMailbox, int32_t waitTime,
+		const void *const pMessage);
+uint32_t RTOS_SVC_mailboxWrite(RTOS_mailbox_t *pMailbox, int32_t waitTime,
+		const void *const pMessage);
 
-uint32_t RTOS_mailboxRead(RTOS_mailbox_t * pMailbox, uint32_t waitFlag,
-    void * const pMessage);
-uint32_t RTOS_SVC_mailboxRead(RTOS_mailbox_t * pMailbox, uint32_t waitFlag,
-    void * const pMessage);
+uint32_t RTOS_mailboxRead(RTOS_mailbox_t *pMailbox, int32_t waitTime,
+		void *const pMessage);
+uint32_t RTOS_SVC_mailboxRead(RTOS_mailbox_t *pMailbox, int32_t waitTime,
+		void *const pMessage);
 
 /**
  * @}

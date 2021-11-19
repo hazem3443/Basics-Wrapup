@@ -157,13 +157,13 @@ NodeType *Find(LinkedList_Type ll, int key)
     {
         if (current->next == NULL || current == NULL)
         {
-            //reached the end without finding the node with that key
+            // reached the end without finding the node with that key
             printf("Node Not Found\n");
             return NULL;
         }
         current = current->next;
     }
-    //now current have the node with that at_key
+    // now current have the node with that at_key
     return current;
 }
 
@@ -172,13 +172,13 @@ void Insert(LinkedList_Type *ll_ref, int at_key, int key, int data)
     NodeType *found_Node = Find(*ll_ref, at_key);
 
     if (!isEmpty(*ll_ref) && found_Node == NULL)
-    { //element not found
+    { // element not found
         printf("Element NOT found\n");
         return;
     }
 
     if (found_Node == ll_ref->head)
-    { //element at head
+    { // element at head
         InsertFirst(ll_ref, key, data);
     }
     else

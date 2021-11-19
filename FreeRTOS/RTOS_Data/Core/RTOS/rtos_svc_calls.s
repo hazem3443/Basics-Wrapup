@@ -19,6 +19,9 @@
 .global RTOS_SVC_mailboxWrite
 .global RTOS_SVC_mailboxRead
 
+.global RTOS_SVC_threadDelay
+.global RTOS_SVC_threadDestroy
+
 .text
 
 .type RTOS_SVC_schedulerStart, %function
@@ -74,4 +77,14 @@ RTOS_SVC_mailboxWrite:
 .type RTOS_SVC_mailboxRead, %function
 RTOS_SVC_mailboxRead:
     svc 10
+    bx lr
+
+.type RTOS_SVC_threadDelay, %function
+RTOS_SVC_threadDelay:
+    svc 11
+    bx lr
+
+.type RTOS_SVC_threadDestroy, %function
+RTOS_SVC_threadDestroy:
+    svc 12
     bx lr

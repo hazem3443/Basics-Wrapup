@@ -42,5 +42,5 @@ then loop over that interval or loop (**interval**) times insertionly starting f
 - stable sorting
 - adaptive sorting algorithm
 
-**Time Complexity** O(n)  
-**Space Complexity** S(4)
+**Time Complexity** worst case is O(n(log(n))^2)
+**Space Complexity** S(1)

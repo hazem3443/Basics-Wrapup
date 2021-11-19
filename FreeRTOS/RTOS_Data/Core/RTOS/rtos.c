@@ -25,7 +25,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
 /* Includes */
-#include "../RTOS/Inc/rtos.h"
+#include "Inc/rtos.h"
 
 /**
  * @addtogroup stm32_examples
@@ -82,13 +82,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * @brief   Variable to store millisecond ticks
  */
-static volatile uint32_t sysTickCounter = 0;
-
+/**
+ * @brief   Flag used to indicate the scheduler status
+ */
+static uint32_t schedulerRunning = 0;
 /**
  * @brief   Thread and stack object for idle thread
  */
-RTOS_thread_t idleThread;
-RTOS_stack_t idleThreadStack;
+static RTOS_thread_t idleThread;
+static RTOS_stack_t idleThreadStack;
 
 /**
  * @}
@@ -229,12 +231,23 @@ void RTOS_schedulerStart(void)
   /* Execute ISB after changing CONTROL */
   __ISB();
 
-  /* Reset tick counter */
-  sysTickCounter = 0;
+  /* Flag scheduler is running */
+  schedulerRunning = 1;
 
   /* Enable all interrupts */
   __set_BASEPRI(0);
 
+}
+
+/**
+ * @brief   Returns scheduler running status
+ * @note
+ * @param   None
+ * @retval  None
+ */
+uint32_t RTOS_isSchedulerRunning(void)
+{
+  return schedulerRunning;
 }
 
 /**
@@ -260,11 +273,11 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
   switch(svc_number)
   {
     case 0:
-      RTOS_schedulerStart();
+    	RTOS_schedulerStart();
     break;
 
     case 1:
-      RTOS_threadCreate(
+    	RTOS_threadCreate(
           (RTOS_thread_t *) svc_args[0],
           (RTOS_stack_t *) svc_args[1],
           (uint32_t) svc_args[2],
@@ -272,46 +285,54 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
     break;
 
     case 2:
-      RTOS_mutexCreate((RTOS_mutex_t *) svc_args[0], (uint32_t) svc_args[1]);
+    	RTOS_mutexCreate((RTOS_mutex_t *) svc_args[0], (uint32_t) svc_args[1]);
     break;
 
     case 3:
-      returnStatus = RTOS_mutexLock((RTOS_mutex_t *) svc_args[0],
-          (uint32_t) svc_args[1]);
+    	returnStatus = RTOS_mutexLock((RTOS_mutex_t *) svc_args[0],
+          (int32_t) svc_args[1]);
     break;
 
     case 4:
-      RTOS_mutexRelease((RTOS_mutex_t *) svc_args[0]);
+    	RTOS_mutexRelease((RTOS_mutex_t *) svc_args[0]);
     break;
 
     case 5:
-      RTOS_semaphoreCreate((RTOS_semaphore_t *) svc_args[0],
-          (uint32_t) svc_args[1]);
+    	RTOS_semaphoreCreate((RTOS_semaphore_t *) svc_args[0],
+          (int32_t) svc_args[1]);
     break;
 
     case 6:
-      returnStatus = RTOS_semaphoreTake((RTOS_semaphore_t *) svc_args[0],
-          (uint32_t) svc_args[1]);
+    	returnStatus = RTOS_semaphoreTake((RTOS_semaphore_t *) svc_args[0],
+          (int32_t) svc_args[1]);
     break;
 
     case 7:
-      RTOS_semaphoreGive((RTOS_semaphore_t *) svc_args[0]);
+    	RTOS_semaphoreGive((RTOS_semaphore_t *) svc_args[0]);
     break;
 
     case 8:
-      RTOS_mailboxCreate((RTOS_mailbox_t *) svc_args[0], (void *) svc_args[1],
+    	RTOS_mailboxCreate((RTOS_mailbox_t *) svc_args[0], (void *) svc_args[1],
           (uint32_t) svc_args[2], (uint32_t) svc_args[3]);
     break;
 
     case 9:
-      returnStatus = RTOS_mailboxWrite((RTOS_mailbox_t *) svc_args[0],
-          (uint32_t) svc_args[1], (const void * const) svc_args[2]);
+    	returnStatus = RTOS_mailboxWrite((RTOS_mailbox_t *) svc_args[0],
+          (int32_t) svc_args[1], (const void * const) svc_args[2]);
     break;
 
     case 10:
-      returnStatus = RTOS_mailboxRead((RTOS_mailbox_t *) svc_args[0],
-          (uint32_t) svc_args[1], (void * const) svc_args[2]);
+    	returnStatus = RTOS_mailboxRead((RTOS_mailbox_t *) svc_args[0],
+          (int32_t) svc_args[1], (void * const) svc_args[2]);
     break;
+
+    case 11:
+    	RTOS_threadAddRunningToTimerList((uint32_t) svc_args[0]);
+	break;
+
+	case 12:
+		RTOS_threadDestroy((RTOS_thread_t *) svc_args[0]);
+	break;
 
     default:
       /* Not supported svc call */
@@ -328,21 +349,42 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
     case 9:
     case 10:
       /* Check return status */
-      if(2 == returnStatus)
-      {
-        /* Context switch was triggered, update program counter,
-         * when the context is restored the thread will try again and call svc 3 again because
-         * svc_args[6] contains the next instruction after current PC (which will point at bx lr) stacked in ram
-         * so changing it to svc_args[6] - 2 will make it point to svc 3 meaning try again after stacking with
-         * the same parameters stacked earlier in ram and 2 because of thumb instruction contains 16-bit instruction
-         * and 2*8 or two chars will make it point correctly to svc 3 instruction*/
-        svc_args[6] = svc_args[6] - 2;
-      }
-      else
-      {
-        /* No context switch was triggered, pass return value */
-        svc_args[0] = returnStatus;//to enable mutex release to know its previous value
-      }
+    	if(RTOS_CONTEXT_SWITCH_TRIGGERED == returnStatus)
+        {
+    		/* Context switch was triggered, update program counter,
+			 * when the context is restored the thread will try again and call svc 3 again because
+			 * svc_args[6] contains the next instruction after current PC (which will point at bx lr) stacked in ram
+			 * so changing it to svc_args[6] - 2 will make it point to svc 3 meaning try again after stacking with
+			 * the same parameters stacked earlier in ram and 2 because of thumb instruction contains 16-bit instruction
+			 * and 2*8 or two chars will make it point correctly to svc 3 instruction*/
+    		svc_args[6] = svc_args[6] - 2;
+
+    		/* Set waiting time to no wait if it was specified */
+			if(NO_WAIT < (int32_t) svc_args[1])
+			{
+				/* Reset waiting time of this thread scope*/
+				/* to enable it to run again with wait of 0 meaning run again directly without waiting and if
+				 * it still locked or taken then ignore it because its timeout value have come
+				 * which will be retrieved from timer and waiting list to come back to ready list
+				 *
+				 * the function that is going to call this thread again is the tick timer function which will
+				 * be executed only when its time happen or its tick value have come
+				 *
+				 * and also the release function that is going to retrieve the next thread in the waiting list and call it
+				 * with waiting time of 0  meaning don't wait it is locked or its timeout value exceeded
+				 * */
+				svc_args[1] = NO_WAIT;
+			}
+			else
+			{
+				/* Do nothing, no wait time specified */
+			}
+        }
+    	else
+    	{
+    		/* No context switch was triggered, pass return value */
+    		svc_args[0] = returnStatus;//to enable mutex release to know its previous value
+    	}
     break;
 
     default:
@@ -359,11 +401,11 @@ void RTOS_SVC_Handler_main(uint32_t * svc_args)
  */
 void RTOS_SysTick_Handler(void)
 {
-  /* Trigger context switch, set PendSV to pending */
-  SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+	/* Trigger context switch, set PendSV to pending */
+	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 
-  /* Increment SysTick counter */
-  ++sysTickCounter;
+	/* Refresh the timer list */
+	RTOS_threadRefreshTimerList();
 }
 
 

@@ -25,7 +25,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
 /* Includes */
-#include "../RTOS/Inc/rtos.h"
+#include "Inc/rtos.h"
 
 /**
  * @addtogroup rtos
@@ -237,9 +237,10 @@ void RTOS_listRemove(RTOS_listItem_t * pRemovedItem)
 
   /* Remove item from the list */
   pRemovedItem->pList = NULL;
+  if(NULL != pList)
+  pList->numOfItems--;
 
   /* Decrement number of thread items in the list */
-  pList->numOfItems--;
 }
 /**
  * @}

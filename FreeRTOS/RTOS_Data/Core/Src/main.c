@@ -26,10 +26,11 @@ static uint32_t mailbox1buffer[3];
 void thread1function(void)
 {
 	init_GP(PC, 13, OUT50, O_GP_PP);
+	W_GP(PC, 13, 1);
 	while(1)
 	{
 		uint32_t msg = 0x11223344;
-		RTOS_SVC_mutexLock(&mutex1,1);
+		RTOS_SVC_mutexLock(&mutex1,-1);
 //		RTOS_SVC_semaphoreTake(&semaphore1, 1);
 
 		toggle_GP(PC, 13);
@@ -38,11 +39,10 @@ void thread1function(void)
 
 		RTOS_SVC_mutexRelease(&mutex1);
 
-		RTOS_SVC_mailboxWrite(&mailbox1, 1, &msg);
+		RTOS_SVC_mailboxWrite(&mailbox1, 10, &msg);
 
-		for (int var = 0; var < 100000; ++var)
-		{
-		}
+		RTOS_SVC_threadDelay(1000);
+
 	}
 }
 /**
@@ -57,7 +57,7 @@ void thread2function(void)
 	while(1)
 	{
 		uint32_t msg = 0x55667788;
-		RTOS_SVC_mutexLock(&mutex1,1);
+		RTOS_SVC_mutexLock(&mutex1,-1);
 //		RTOS_SVC_semaphoreTake(&semaphore1, 1);
 
 		toggle_GP(PC, 14);
@@ -66,11 +66,9 @@ void thread2function(void)
 
 		RTOS_SVC_mutexRelease(&mutex1);
 
-		RTOS_SVC_mailboxWrite(&mailbox1, 1, &msg);
+		RTOS_SVC_mailboxWrite(&mailbox1, 10, &msg);
 
-		for (int var = 0; var < 100000; ++var)
-		{
-		}
+		RTOS_SVC_threadDelay(1000);
 	}
 }
 
@@ -86,7 +84,7 @@ void thread3function(void)
 	while(1)
 	{
 		uint32_t msg = 0x99101011;
-		RTOS_SVC_mutexLock(&mutex1,1);
+		RTOS_SVC_mutexLock(&mutex1,-1);
 //		RTOS_SVC_semaphoreTake(&semaphore1, 1);
 
 		toggle_GP(PC, 15);
@@ -95,11 +93,9 @@ void thread3function(void)
 
 		RTOS_SVC_mutexRelease(&mutex1);
 
-		RTOS_SVC_mailboxWrite(&mailbox1, 1, &msg);
+		RTOS_SVC_mailboxWrite(&mailbox1, 10, &msg);
 
-		for (int var = 0; var < 100000; ++var)
-		{
-		}
+		RTOS_SVC_threadDelay(1000);
 	}
 }
 
@@ -110,14 +106,14 @@ void thread4function(void)
 	while(1)
 	{
 		uint32_t msg;
-		RTOS_SVC_mutexLock(&mutex1,1);
+		RTOS_SVC_mutexLock(&mutex1,-1);
 //		RTOS_SVC_semaphoreTake(&semaphore1, 1);
 
 		toggle_GP(PA, 0);
 		UART_Tx_Stream(Uart1,"this is task 4\n");
 //		RTOS_SVC_semaphoreGive(&semaphore1);
 
-		RTOS_SVC_mailboxRead(&mailbox1, 1, &msg);
+		RTOS_SVC_mailboxRead(&mailbox1, 10, &msg);
 		if(0x11223344 == msg){
 			UART_Tx_Stream(Uart1,"msg from thread 1\n");
 		}else if( 0x55667788 ==msg){
@@ -129,7 +125,7 @@ void thread4function(void)
 
 		}
 
-		RTOS_SVC_mailboxRead(&mailbox1, 1, &msg);
+		RTOS_SVC_mailboxRead(&mailbox1, 10, &msg);
 		if(0x11223344 == msg){
 			UART_Tx_Stream(Uart1,"msg from thread 1\n");
 		}else if( 0x55667788 ==msg){
@@ -141,7 +137,7 @@ void thread4function(void)
 
 		}
 
-		RTOS_SVC_mailboxRead(&mailbox1, 1, &msg);
+		RTOS_SVC_mailboxRead(&mailbox1, 10, &msg);
 		if(0x11223344 == msg){
 			UART_Tx_Stream(Uart1,"msg from thread 1\n");
 		}else if( 0x55667788 ==msg){
@@ -155,19 +151,14 @@ void thread4function(void)
 
 		RTOS_SVC_mutexRelease(&mutex1);
 
-		for (int var = 0; var < 100000; ++var)
-		{
-		}
+		RTOS_SVC_threadDelay(1000);
 	}
 }
 
 int main (void)
 {
-
 	UART_Init(Uart1,9600);
-	for (int var = 0; var < 2000; ++var)
-	{
-	}
+
 	UART_Tx_Stream(Uart1,"START\r\n");
 	RTOS_init();
 
@@ -175,7 +166,7 @@ int main (void)
 	RTOS_SVC_threadCreate(&thread1, &thread1stack, 1, thread1function);
 	RTOS_SVC_threadCreate(&thread2, &thread2stack, 1, thread2function);
 	RTOS_SVC_threadCreate(&thread3, &thread3stack, 1, thread3function);
-	RTOS_SVC_threadCreate(&thread4, &thread4stack, 1, thread4function);
+	RTOS_SVC_threadCreate(&thread4, &thread4stack, 0, thread4function);
 
 	RTOS_SVC_mutexCreate(&mutex1, 1);//1 Free, 0 locked by any thread
 	RTOS_SVC_semaphoreCreate(&semaphore1, 1);//set semaphore value with 1

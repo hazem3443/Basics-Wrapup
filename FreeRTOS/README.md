@@ -454,7 +454,7 @@ it is nothing more than a QUEUE but it's **ENQUEUE and DEQUEUE** operations need
 - the running thread (supervisor) can terminate itself, or any other thread. it can also create new threads as well.
 - supervisor thread shall make sure the terminated thread does not hold any RTOS resources (mutex, semaphore, etc.)
 
-### Key Notes
+### **Key Notes**
 
 - till now  we have 4 lists
   - **Running list** this list contains the running thread in case on single core and a multiple threads in case of a multicore
@@ -462,11 +462,11 @@ it is nothing more than a QUEUE but it's **ENQUEUE and DEQUEUE** operations need
   - **Waiting list** this list is local to scope of waiting event which represent waiting for a certain mutex, semaphore or maibox buffer so each object of those have a waiting list on that resource but what if the waiting is on the cpu resource? here comes timer list
   - **Timer list** this list contains items ordered ascendingly according to waiting time which is been passed to item value in order to prioritize them for time delay value
 
-from those lists we notice that each thread may need to wait for a certain time on a certain resource so what we can do ?
+from those lists we notice that each thread may need to wait for a certain time on a certain resource **so what we can do ?**
 
-can we move the same item to waiting and timer list ?
+**can we move the same item to waiting and timer list ?**
 
-we ain't do that because while any event have come wheather it is time event or mutex relase we can move this item to ready list but how can we move the same item to two different lists without modifying the **list item structure** ? becasue each item only points to one list
+we shouldn't do that because while any event have come wheather it is time event or mutex relase we can move this item to ready list but how can we move the same item to two different lists without modifying the **list item structure** ? becasue each item only points to one list
 
 we can make or tie each thread to two list items **generic_list_item** and **event_list_item** and we can move generic_list_item between ready and timer list which is global to our RTOS structure and move event_list_item into local resource waiting list such as mutex, semaphore and mailbox and with the help of that structure we can add the same thread into two different lists event list and timer list which enables us to add timeout cabability to our events or waiting lists
 
@@ -474,4 +474,158 @@ we can make or tie each thread to two list items **generic_list_item** and **eve
 
 ---
 
-## **other Features and Events**
+## **Priority Inversion**
+
+- it is a problem mostly happen in RTOS with preemptive scheduler
+- higher priority threads(HPT) have to wait for lower priority threads(LPT) to finish their execution, when they locking non sharable resources
+- lowering the responsiveness and causes system malfunction when higher priority threads have stringent deadlines
+
+- Bounded Priority Inversion
+
+![Bounded Priority inversion](Bounded_Priority_inversion.png)
+
+- Unbounded Priority inversion
+
+![un Bounded Priority inversion](UnBounded_Priority_Inversion.png)
+
+- Priority Inversion Solutions
+  - unbounded priority inversion can be solved by increasing the priority of LPT untile it unlocks the resource
+  - Commonly used approaches for unbounded priority Inversion
+    - Priority inheritance
+    - Priority Ceiling
+  - Bounded priority inversion can be solved with a system design minimizes the sharing between LPT and HPT
+  - Execution time of LPT sharing resource with HPT have to be considered when calculating the schedulability and meeting the deadlines
+
+- Solutions of Unbounded Priority inversion
+  - Priority Inheritance
+  
+    ![Priority Inheritance](Priority_Inheritance.png)
+  
+    while moving or suspending the HPT we increase the Priority OF LPT or make it equal to HPT which give it much time to release the resource and allow the HPT to execute but now the CPU is shared between HPT and LPT which would be at the same priority list
+  
+    this can be done by making a holder for each resource which will contain the priority of the LPT which will be set to HPT priority and while releasing will be brought back to its actuall priority
+
+    notice that this priority inversion can't be done in application design like priority ceilling because it involves internal checking of resource availability so we need to modify our RTOS
+
+  - Priority Ceiling
+  
+    ![Priority Ceilling](Priority_Ceilling.png)
+
+    here we tie the priority to the resource itself so if it is used in HPT then we give the LPT the priority of that HPT and wait till it finished and then call HPT that also delays the HPT that its time or delayed by bounded time value
+  
+    we can handle this by creating a basePriority property in thread TCB object and while locking the resource of LPT we give it the highest priority of this resource it wants to unlock and while releasing this resource we need to return the basePriority of this thread (LPT) to the current priority and we need to create a property for our resource that identify the highest thread priority that uses this resource in order to set it to current priority while locking the resource
+
+    also we can take care of that in our application design and set the priority by hand while implemeting the application
+- **Operational Functions**
+  - **Priority Inversion**
+    first we need to modify the thread object to have origiPriority property in order to change the running priority to the HPT's priority so we can retrive LPT's priority
+    also we need to add a new property to mutex object to have the thread that holds this mutex in order to change its priority to HPT's priority  
+    then we need to modify our LOCK and Release functions so that during lock operation if the thread is waiting for another thread which has lower priority then change its priority to the HPT's priority so that it can run alongside the HPT and prevent medium threads and during release just we need to check if the current running priority have the same priority as original priority in the thread object
+  - **Priority Ceilling**
+    this method can be wraped from the application perspective by setting the priority of the current running thread so our RTOS has to provide APIs to Get and Set the priority of the running thread without any modification to the thread object
+
+---
+
+## **DeadLock**
+
+- Several threads compete for limited number of resources
+- when the resource not available the requesting thread switched to waiting state
+- requested resource already held by another thread in the waint g statem waiting for the requesting thread to release another resource.
+
+![DeadLock Example](DeadLock_Example.png)
+
+we can represent the **circular wait** (DEADLOCK) with **Resource Allocation Graph method** which is a method used to visualize resource allocations, and requests in the system where threads are shown with circules, resources are shown with rectangles and blacks dots represent mutex that can share the resource and if many dots found in the resource that mean we have a number of instances from a certain semaphore also arrow from a thread to a resource indicates an request or a wait and arrow from a resource to a thread indicates an allocation.
+  
+![Resource allocation graph](Resource_allocation_graph.png)
+
+some Examples
+  
+![DeadLock Example with three tasks](DeadLock_Example_1.png)
+
+- **Dead Lock Conditions**
+  - **Mutual exclusion**
+    - System should at least has one resource shared between many threads
+  
+  - **Hold and wait**
+    - all threads wait for more resourcesm without releasing the resource they hold
+    - such as locking a mutex and wait till this mutex released by another thread
+  - **No preemption of resources**
+    - allocation of resources can not be cancelled only released from the holding thread
+  - **Circular wait**
+    - resource allocation graph should show a circular wait (when resource with one instance)
+    - not all circular wait cause a dead lock such that
+      - ![Circular Wait Without DeadLock](Circular_Wait_Without_DeadLock.png)
+      - the outgoing arrow from T to R means **lock operation** the ingoing arrow from T from R means **Release operation**
+      - also notice here that the reason why we didn't have a deadlock is that T4 doesn't apply to hold and wait it just request and release a certain resource so it breaks the loop that make other threads run properly
+
+### Handling Deadlocks
+  
+- **deadlock prevention**
+  - **Prevent Mutual exclusion** (not an efficient way as we doesn't have as many as that resources)
+    - only one thread in the system using the resource.
+    - can not be satisfied for many hardware decices.
+    - means use different hardware resource for each thread which is difficult for example having 10 threads with 10 uarts :D
+  - **Prevent hold and wait** (can be implemented easily)
+    - no thread should hold the resource in waiting list
+    - threads can request all resource they need at the beginning of the processing
+    - threads can only request resources if they not holding any resources.
+    - for example T1 locks R1 and go through execution then locks R2 which is requested by another thread so it enters waiting state on that R2 here hold and wait occurs,
+  
+      ****T1 Locks R1  
+      ..... here T2 locks R2 then locks R1        this cause T2 enter waiting list for R1  
+      ****T1 locks R2                             which will casue T1 to enter wating list on R1 and no task executes  
+      ****T1 Releases R1,R2  
+  
+    and in order to prevent that we can release all resources before each locking to a certian resource
+
+      ****T1 locks R1  
+      ...... here T2 Locks R2 then locks R1 then Releases R1 and R2 after finishing its execution  
+      ****T1 Release R1 then locks R1 and R2 this cause T2 to release R1 and R2 then T1 locks R1 and R2  
+      **** T1 Releases R1, R2  
+
+      this can be done from our application design and also by modifying our RTOS using create a Holder in TCB that contains holders of each thread that is need to be release before any lock operation beside locking with mutex to be locked again  
+
+  - **prevent "no preemption of resources"** (difficult to implement)
+    - when a thread in the waiting state its resources can be deallocated, and allocated to other thread.
+    - saving and restoring the status of the resource is very difficult and impossible for some devices because we need to save register status of each configuration and reuse it again when switching back to this thread according to resource scope
+    - can't be satisfied for many hardware devices
+  - **Prevent circular wait** (can be made)
+    - forcing threads to request resources in an increasing order of enumeration
+    - Resource Enumeration Method
+    - Each resource assigned to an increasing enumerated value, e.g. N1 fro R1,N2 for R2,N3 for R3 and so on.
+    - thread can request a resource only when the enumeration calue of the new resource higher than the enumeration value of the resources it already hold
+    - if a resources with lower enumeration value is needed the thread should release all resources with higher value than the new resource.
+    - the thread can later request the higher enumeration value threads release to request low enumeration value thread.
+
+    - **for example**  
+      - ![Detailed example Enumeration method](Detailed_example_Enumeration_method.png)
+  
+      - suppose we have  
+        T1 Locks R3 then R1 then release R1  
+        T2 Locks R1 then R2 then release R2  
+        T3 Locks R2 then R3 then release R3  
+
+      - to solve this issue we need to create a numeration value for each resource ordered in an increasing order such that  
+        R1 -> N1(0)  
+        R2 -> N2(1)  
+        R3 -> N3(2)  
+
+      - lets solve the example with new method discussed earlier  
+        **** T2  locks R1, R2 this is correct because N2>N1  
+        **** T3  locks R2, R3 this is correct because N3>N2  
+        **** T1  locks R3, R1 this is wrong because N3>N1 so this should first release R3 then Lock R2
+
+        so here we break the loop and notice in the implementation we can make this holder as a list so each thread can identify and check holder numeration value
+
+- **deadlocks avoidance**
+  - allocate resources so that there is always a sequence of threads (safe sequence) which can be satisfied with the resource requirements for unallocated and released resources in the system.
+  - we can think of a semaphore instances as a control of the same peripheral but with different instance such as UART we may have UART1 ,UART2 and so on, so we can do this using semaphore instance checking where we can give and take from a semaphore value each with a certain peripheral module
+
+- **deadlocks detection and recovery**
+  - RTOS can run a routine periodically or when CPU utilization drops (longer time in idle thread) to detect deadlocks using deadlock detection Algorithms
+  - after detections, the recovery algorithm has to be invoked to recover the system from deadlock
+  - recovery can be done by system reset or by resources preemptions
+
+- **manual reset when deadlock happended**
+  - simple solution is to ignore the deadlocks, if they happen at low rate instead of running costly detection and recovery algorithms
+  - if the deadlock happend, the system will be restarted manually or automatically e.g. using watchdog

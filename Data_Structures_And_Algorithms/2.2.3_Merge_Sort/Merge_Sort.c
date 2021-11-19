@@ -23,7 +23,7 @@ void main()
     // printf("after swapping -> x = %i, y = %i\n", x, y);
     // printf("arr len = %lu\n", sizeof(arr) / sizeof(int));
 
-    int arr[] = {10, 22, 3, 4, 5, 6};
+    int arr[] = {10, 22, 3, 4, 5, 6, 63, 548, 2304, 2, 1, 1, 2, 2, 3};
 
     int len = sizeof(arr) / sizeof(int);
     Merge_Sort(arr, len, 1);
@@ -32,10 +32,10 @@ void main()
 }
 
 void swapByReference(int *x, int *y)
-{                 //O(3) -- S(0)
-    *x = *y + *x; //x= x+y
-    *y = *x - *y; //y = x+y-y = x
-    *x = *x - *y; //x = x+y-x = y
+{                 // O(3) -- S(0)
+    *x = *y + *x; // x= x+y
+    *y = *x - *y; // y = x+y-y = x
+    *x = *x - *y; // x = x+y-x = y
 }
 
 void Merge_Sort(int *x, int len, bool asc)
@@ -53,7 +53,7 @@ void Merge_Sort(int *x, int len, bool asc)
     // ----------------
     // ----------------
 
-    //my methodology
+    // my methodology
     divide_merge(x, len, asc);
 }
 void sort(int *x, int *y, int low, int high)
@@ -67,7 +67,7 @@ void sort(int *x, int *y, int low, int high)
         sort(x, y, low, mid);
         sort(x, y, mid + 1, high);
 
-        merging(x, y, low, mid, high); //this will merge iteratively too
+        merging(x, y, low, mid, high); // this will merge iteratively too
     }
     else
     {
@@ -144,7 +144,7 @@ int *merge(int *l1, int l1_len, int *l2, int l2_len, int *x, bool asc)
     }
     // memcpy(x, l3, (l1_len + l2_len) * sizeof(int));
 
-    //like memcpy function
+    // like memcpy function
     l1_len += l2_len;
     l2_len = 0;
     while ((x[l2_len] = l3[l2_len]) && ++l2_len < l1_len)

@@ -1,0 +1,2 @@
+clear && gcc ValeoTest.c -o out && ./out
+
