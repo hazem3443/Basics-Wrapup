@@ -1,0 +1,353 @@
+[
+  {
+    "id": "619c905faba0114c1274d637",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2021-11-25T08:04:49.746Z",
+    "desc": "https://github.com/TheBadNomads/LastLoremaster/pull/145\n a different implementation of the reflect function that can uses a rigid body's shape instead of relying on the value of Radius provided as a parameter\nuses https://docs.unity3d.com/ScriptReference/Rigidbody.SweepTestAll.html",
+    "descData": {
+      "emoji": {}
+    },
+    "dueReminder": null,
+    "idBoard": "608ab4a517343461fdedd1fa",
+    "idList": "608ab4a517343461fdedd1fd",
+    "idMembersVoted": [
+      "608a896019192d13f3d658b0",
+      "608e6e766311608269dd1b5c",
+      "60e2d1a7c3456041cb941406",
+      "608e6e2732623061ef431d82"
+    ],
+    "idShort": 618,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "Utility - Reflect (RigidBody)",
+    "pos": 0.125,
+    "shortLink": "u8d9mdUz",
+    "isTemplate": false,
+    "cardRole": null,
+    "badges": {
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "location": false,
+      "votes": 4,
+      "viewingMemberVoted": true,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 0,
+      "checkItemsChecked": 0,
+      "checkItemsEarliestDue": null,
+      "comments": 0,
+      "attachments": 0,
+      "description": true,
+      "due": null,
+      "dueComplete": false,
+      "start": null
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [],
+    "idMembers": [
+      "60e2d1d93bd3b383bad2ac83"
+    ],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/u8d9mdUz",
+    "start": null,
+    "subscribed": false,
+    "url": "https://trello.com/c/u8d9mdUz/618-utility-reflect-rigidbody",
+    "cover": {
+      "idAttachment": null,
+      "color": null,
+      "idUploadedBackground": null,
+      "size": "normal",
+      "brightness": "dark",
+      "idPlugin": null
+    }
+  },
+  {
+    "id": "619a1853299c2d6517d29802",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2021-11-23T10:42:05.481Z",
+    "desc": "Replaced the `FilterObjects` utility function with 2 variants (`MinBy` & `MaxBy`)\nto be used to get a single element from a list based on a comparer\n\nhttps://github.com/TheBadNomads/LastLoremaster/pull/146",
+    "descData": {
+      "emoji": {}
+    },
+    "dueReminder": null,
+    "idBoard": "608ab4a517343461fdedd1fa",
+    "idList": "608ab4a517343461fdedd1fd",
+    "idMembersVoted": [
+      "608e6e2732623061ef431d82",
+      "608a896019192d13f3d658b0",
+      "608e6e766311608269dd1b5c",
+      "60e2d1a7c3456041cb941406"
+    ],
+    "idShort": 611,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "Rename FilterObjects function",
+    "pos": 0.25,
+    "shortLink": "Zwlpeyck",
+    "isTemplate": false,
+    "cardRole": null,
+    "badges": {
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "location": false,
+      "votes": 4,
+      "viewingMemberVoted": true,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 0,
+      "checkItemsChecked": 0,
+      "checkItemsEarliestDue": null,
+      "comments": 0,
+      "attachments": 1,
+      "description": true,
+      "due": null,
+      "dueComplete": false,
+      "start": null
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [],
+    "idMembers": [
+      "60e2d1d93bd3b383bad2ac83"
+    ],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/Zwlpeyck",
+    "start": null,
+    "subscribed": false,
+    "url": "https://trello.com/c/Zwlpeyck/611-rename-filterobjects-function",
+    "cover": {
+      "idAttachment": null,
+      "color": null,
+      "idUploadedBackground": null,
+      "size": "normal",
+      "brightness": "dark",
+      "idPlugin": null
+    }
+  },
+  {
+    "id": "61924ffb9d07f14e6f4ad567",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2021-11-23T10:41:34.934Z",
+    "desc": "this feature will allow any member with the \"Admin\" role inside the discord server to insert a retroactive leave\n\nhttps://github.com/TheBadNomads/TheBadHR/pull/36",
+    "descData": {
+      "emoji": {}
+    },
+    "dueReminder": null,
+    "idBoard": "608ab4a517343461fdedd1fa",
+    "idList": "608ab4a517343461fdedd1fd",
+    "idMembersVoted": [],
+    "idShort": 578,
+    "idAttachmentCover": null,
+    "idLabels": [
+      "616beb3fc7f78822e2d7ff77"
+    ],
+    "manualCoverAttachment": false,
+    "name": "Discord Bot Feature (Retroactive leave insertion by admins)",
+    "pos": 0.5,
+    "shortLink": "nBEYfRTH",
+    "isTemplate": false,
+    "cardRole": null,
+    "badges": {
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "location": false,
+      "votes": 0,
+      "viewingMemberVoted": false,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 19,
+      "checkItemsChecked": 0,
+      "checkItemsEarliestDue": null,
+      "comments": 5,
+      "attachments": 0,
+      "description": true,
+      "due": null,
+      "dueComplete": false,
+      "start": null
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [
+      "61924ffb9d07f14e6f4ad5b9"
+    ],
+    "idMembers": [
+      "608e57ff03fd696363ca99fe"
+    ],
+    "labels": [
+      {
+        "id": "616beb3fc7f78822e2d7ff77",
+        "idBoard": "608ab4a517343461fdedd1fa",
+        "name": "Discord Bot",
+        "color": "sky"
+      }
+    ],
+    "shortUrl": "https://trello.com/c/nBEYfRTH",
+    "start": null,
+    "subscribed": false,
+    "url": "https://trello.com/c/nBEYfRTH/578-discord-bot-feature-retroactive-leave-insertion-by-admins",
+    "cover": {
+      "idAttachment": null,
+      "color": null,
+      "idUploadedBackground": null,
+      "size": "normal",
+      "brightness": "dark",
+      "idPlugin": null
+    }
+  },
+  {
+    "id": "6194ba515ce7d570c00e6ce9",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2021-11-23T06:19:57.987Z",
+    "desc": "https://github.com/TheBadNomads/LastLoremaster/pull/140\nthe creation of new instances of RNG is handled internally inside the RNG class,\nnow it uses a global RNG to generate the seed of new instances so that the randomness of the whole game can be controlled using a single seed value that will later be read from the settings file",
+    "descData": {
+      "emoji": {}
+    },
+    "dueReminder": null,
+    "idBoard": "608ab4a517343461fdedd1fa",
+    "idList": "608ab4a517343461fdedd1fd",
+    "idMembersVoted": [
+      "60e2d1a7c3456041cb941406",
+      "608e6e2732623061ef431d82",
+      "608e57ff03fd696363ca99fe"
+    ],
+    "idShort": 604,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "RNG - Creates it's own instance (Factory Pattern)",
+    "pos": 1,
+    "shortLink": "LLs4unWD",
+    "isTemplate": false,
+    "cardRole": null,
+    "badges": {
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "location": false,
+      "votes": 3,
+      "viewingMemberVoted": false,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 0,
+      "checkItemsChecked": 0,
+      "checkItemsEarliestDue": null,
+      "comments": 1,
+      "attachments": 0,
+      "description": true,
+      "due": null,
+      "dueComplete": false,
+      "start": null
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [],
+    "idMembers": [
+      "60e2d1d93bd3b383bad2ac83"
+    ],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/LLs4unWD",
+    "start": null,
+    "subscribed": false,
+    "url": "https://trello.com/c/LLs4unWD/604-rng-creates-its-own-instance-factory-pattern",
+    "cover": {
+      "idAttachment": null,
+      "color": null,
+      "idUploadedBackground": null,
+      "size": "normal",
+      "brightness": "dark",
+      "idPlugin": null
+    }
+  },
+  {
+    "id": "6194c854822ab523b6cea7e0",
+    "checkItemStates": null,
+    "closed": false,
+    "dateLastActivity": "2021-11-18T10:16:27.359Z",
+    "desc": "https://github.com/TheBadNomads/LastLoremaster/pull/126",
+    "descData": {
+      "emoji": {}
+    },
+    "dueReminder": null,
+    "idBoard": "608ab4a517343461fdedd1fa",
+    "idList": "608ab4a517343461fdedd1fd",
+    "idMembersVoted": [
+      "608e57ff03fd696363ca99fe",
+      "60e2d1a7c3456041cb941406",
+      "608a896019192d13f3d658b0"
+    ],
+    "idShort": 609,
+    "idAttachmentCover": null,
+    "idLabels": [],
+    "manualCoverAttachment": false,
+    "name": "Collection Utilities: InsertIntoSortedCollection, FlattenEnumerable",
+    "pos": 16,
+    "shortLink": "Mx6Wdro6",
+    "isTemplate": false,
+    "cardRole": null,
+    "badges": {
+      "attachmentsByType": {
+        "trello": {
+          "board": 0,
+          "card": 0
+        }
+      },
+      "location": false,
+      "votes": 3,
+      "viewingMemberVoted": true,
+      "subscribed": false,
+      "fogbugz": "",
+      "checkItems": 19,
+      "checkItemsChecked": 0,
+      "checkItemsEarliestDue": null,
+      "comments": 2,
+      "attachments": 0,
+      "description": true,
+      "due": null,
+      "dueComplete": false,
+      "start": null
+    },
+    "dueComplete": false,
+    "due": null,
+    "idChecklists": [
+      "6194c854822ab523b6cea82f"
+    ],
+    "idMembers": [
+      "608e6e2732623061ef431d82"
+    ],
+    "labels": [],
+    "shortUrl": "https://trello.com/c/Mx6Wdro6",
+    "start": null,
+    "subscribed": false,
+    "url": "https://trello.com/c/Mx6Wdro6/609-collection-utilities-insertintosortedcollection-flattenenumerable",
+    "cover": {
+      "idAttachment": null,
+      "color": null,
+      "idUploadedBackground": null,
+      "size": "normal",
+      "brightness": "dark",
+      "idPlugin": null
+    }
+  }
+]

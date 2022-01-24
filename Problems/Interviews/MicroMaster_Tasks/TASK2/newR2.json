@@ -1,0 +1,39 @@
+[
+	{
+		"components" : 
+		[
+			{
+				"id" : "res1",
+				"netlist" : 
+				{
+					"t1" : "vdd",
+					"t2" : "n1"
+				},
+				"resistance" : 
+				{
+					"default" : 100,
+					"max" : 1000,
+					"min" : 10
+				},
+				"type" : "resistor"
+			},
+			{
+				"id" : "m1",
+				"m(l)" : 
+				{
+					"deafult" : 1.5,
+					"max" : 2,
+					"min" : 1
+				},
+				"netlist" : 
+				{
+					"drain" : "n1",
+					"gate" : "vin",
+					"source" : "vss"
+				},
+				"type" : "nmos"
+			}
+		],
+		"id" : "topology1"
+	}
+]

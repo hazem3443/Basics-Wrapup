@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "string": "cpp",
+        "type_traits": "cpp",
+        "iostream": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "string_view": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp",
+        "typeinfo": "cpp",
+        "ostream": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "utility": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp",
+        "cstddef": "cpp"
+    }
+}

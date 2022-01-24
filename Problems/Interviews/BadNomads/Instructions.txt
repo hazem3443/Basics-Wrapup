@@ -1,0 +1,7 @@
+We use Trello as a project management tool at TheBadNomads. As such, your task will involve the use of Trello's API. Our workflow currently involves a developer picking up a task in the "Staged Tasks" list and moving it to an "In Progress" list. When that developer is done, the card is moved into "In Review" where other developers review the work. If no changes are required, the relevant pull request is merged and the card is moved to a "Done" list. 
+
+Your task is to create a script that is meant to be run at the end of every week. It should create a new list in another board, then move all the cards in the "Done" column into it for archival and reporting purposes. You are then to parse the data of the moved cards into a text report. You are to decide on the format of the report and the data contained within it.
+
+You are given the actual response to the Get Cards in a List API call to understand the structure of the response if you haven't already played around with the API beforehand. You can find it in response.json. 
+
+You may write your script in any language you are comfortable in. Writing in pseudocode is fine as well if you prefer that. You are NOT meant to write a fully functioning script. This test is not only to gauge your ability to navigate documentation and parse data, but also serves as a preview for the work you will be doing in TheBadNomads. You will be given 45 minutes to complete this task followed by a short session for questions. 
