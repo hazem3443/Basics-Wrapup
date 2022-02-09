@@ -19,7 +19,14 @@ void main()
     for (i = 0; i < res_count; i++)
         printf("%i ", res_arr[i]);
 
-    printf("\n");
+    int countsum = 0;
+    for (i = 0; i < len; i++)
+        while (res_arr[i] != 0)
+        {
+            arr[i] += i--;
+        }
+
+    printf("\n%i\n", countsum);
 }
 
 int *countingSort(int arr_count, int *arr, int *result_count)

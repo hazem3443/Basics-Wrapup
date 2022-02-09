@@ -26,10 +26,10 @@ void main()
 
     //    10*10 matrix
 
-    //array of n elements can be defined as i*j matrix where i*j=n
-    //we can access matrix[i][j] by step shifting as follows
-    //  *(x + i + (j << row_size-1)) = value;
-    //we must deal with even number of row sizes
+    // array of n elements can be defined as i*j matrix where i*j=n
+    // we can access matrix[i][j] by step shifting as follows
+    //   *(x + i + (j << row_size-1)) = value;
+    // we must deal with even number of row sizes
 
     *(x + (2 << 2) + 0) = 5;
     for (int i = 0; i < 20; i++)
