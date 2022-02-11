@@ -34,8 +34,7 @@
 
 ## Screenshots
 
-![Schmatic](/Circuit%20schematic.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
+![Schmatic](Circuit%20schematic.png)
 
 ## Setup
 
@@ -54,4 +53,4 @@ Just install CubeIDE and any Serial Port Viewer Ide to See Uart messages, Here w
 
 Created by [@hazemkhaled](https://www.linkedin.com/in/hazem-khaled-90898315a/)
 
-also the project is save to my github [@hazem3443](https://www.linkedin.com/in/hazem-khaled-90898315a/)
+also the project is save to my github [@hazem3443](https://github.com/hazem3443)
