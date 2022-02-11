@@ -1,0 +1,10 @@
+core_cm3.h:1511:22:__NVIC_EnableIRQ	16	static
+UART.c:10:6:UART_Init	72	static,ignoring_inline_asm
+UART.c:66:15:UART_BRR_CALC	56	static
+UART.c:90:6:UART_Rx	32	static
+UART.c:98:6:UART_Tx	32	static
+UART.c:109:6:UART_Tx_Stream	24	static
+UART.c:119:6:UART_ISR	32	static
+UART.c:145:6:systick_interrupt_start	4	static,ignoring_inline_asm
+UART.c:156:6:systick_int	24	static
+UART.c:185:6:UART_msg	32	static

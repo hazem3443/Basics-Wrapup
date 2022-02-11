@@ -1,0 +1,8 @@
+gp_driver.c:10:6:init_GP	40	static
+gp_driver.c:31:5:R_GP	32	static
+gp_driver.c:39:6:W_GP	32	static,ignoring_inline_asm
+gp_driver.c:47:6:toggle_GP	16	static
+gp_driver.c:52:6:Delays	24	static
+gp_driver.c:58:6:Systic_init	4	static
+gp_driver.c:63:6:DelayMillis	4	static
+gp_driver.c:71:6:DelayMs	16	static

@@ -1,0 +1,92 @@
+
+RECEIVE Sequence
+/* Check modem communication */
+
+AT\r
+
+/* Receive response */
+
+OK\r
+
+/* Turn off Flow Control */
+
+AT&K0\r
+
+/* Receive response */
+
+OK\r
+
+/* Initiate an Extended SBD Session */
+
+AT+SBDIX\r
+
+/* Receive response */
+
++SBDIX: <MO status>, <MOMSN>, <MT status>, <MTMSN>, <MT length>, <MT queued>\r
+
+/* See SBDIX Key for information on each parameter */
+
+
+
+
+
+
+TRANSMIT Sequence
+
+/* Issue AT command */
+
+AT\r
+
+/* Receive response */
+
+OK\r
+
+/* Turn off Flow Control */
+
+AT&K0\r
+
+/* Receive response */
+
+OK\r
+
+/* Insert ASCII message into MO buffer */
+
+AT+SBDWT=Hello World\r 
+
+/* Receive response */
+
+OK\r
+
+/* Initiate an Extended SBD Session */
+
+AT+SBDIX\r
+
+/* Receive response */ 
+
++SBDIX: <MO status>, <MOMSN>, <MT status>, <MTMSN>, <MT length>, <MT queued>\r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
