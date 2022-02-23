@@ -1,3 +1,5 @@
 *.rar filter=lfs diff=lfs merge=lfs -text
 *.psd filter=lfs diff=lfs merge=lfs -text
+Problems/Interviews/ATI_TASK/Operational_video.mp4 filter=lfs diff=lfs merge=lfs -text
+Problems/Interviews/valeo/Valeo.rar filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
