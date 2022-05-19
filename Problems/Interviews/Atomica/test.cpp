@@ -91,12 +91,12 @@ public:
 
 int main()
 {
-	int a[] = { 1, 2, 4, 5 };
+    int a[] = { 1, 2, 4, 5 };
 
-	Array<int> arr1(a, 4);
-	arr1[3] = 6;
+    Array<int> arr1(a, 4);
+    arr1[3] = 6;
     arr1.push_back(10);
-	// arr1[-4] = 6; // array index out of range
+    // arr1[-4] = 6; // array index out of range
     arr1.print();
     cout<<endl;
     auto itemx = arr1[2];
@@ -105,14 +105,14 @@ int main()
     //remember demorgan law for lamda condition
     // (A+B)' = A'. B'
     // (A.B)' = A' + B'
-	arr1.remove_if_el(arr1.begin(),
+    arr1.remove_if_el(arr1.begin(),
                         arr1.end(),
                         [itemx,itemy](int el){
                             return (el != itemx)&(el != itemy);
                     });
     arr1.print();
 
-	return 0;
+    return 0;
 }
 
 //TODO:
