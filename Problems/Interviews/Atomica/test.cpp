@@ -133,6 +133,7 @@ array_type{
     method operator[]();
     method push_back(item_type);
 
+    method operator==();
     method remove_if(lamdaFnx);
     method printArray();//loops over and executes item.printEl()
 }
