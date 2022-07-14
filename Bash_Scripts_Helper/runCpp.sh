@@ -1,1 +1,1 @@
-g++ $1 -o out && ./out && rm out
+g++-11 $1 -o out && ./out && rm out

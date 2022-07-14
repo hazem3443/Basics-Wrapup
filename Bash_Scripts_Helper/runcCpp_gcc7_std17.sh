@@ -1,0 +1,1 @@
+g++-7 $1 -std=c++17 -o out && ./out && rm out
