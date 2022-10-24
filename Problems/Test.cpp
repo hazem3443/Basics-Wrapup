@@ -4,15 +4,16 @@ using namespace std;
 
 class human{
     protected:
+        string name;
+        string country;
+        int age;
+
         human(string name, string country, int age){
             human::name = name;
             human::country = country;
             human::age = age;
-            cout << "human Constructed"<<endl;
+            cout << "human constructed protected"<<endl;
         }
-        string name;
-        string country;
-        int age;
     public:
         human(){
             cout << "human Constructed"<<endl;

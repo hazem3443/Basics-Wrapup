@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul 15 00:33:06 2022
+# Make data base, printed on Thu Sep 15 23:07:07 2022
 
 # Variables
 
@@ -43,7 +43,7 @@ QT_ACCESSIBILITY = 1
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/101/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/108/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -59,7 +59,7 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/hazem/.config/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
+VSCODE_CODE_CACHE_PATH = /home/hazem/.config/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
 # environment
 LANG = C
 # environment
@@ -69,11 +69,11 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.295
+GNOME_TERMINAL_SERVICE = :1.134
 # makefile
 MAKEFLAGS = pqrR
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=3c47c37c8ffe3a97d71b248762d04035
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=7bb60993fd49a813aceb23e463238b84
 # makefile
 CURDIR := /media/hazem/Hydra/basics
 # environment
@@ -101,19 +101,19 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 33355
+VSCODE_PID = 9519
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/hazem-PC:@/tmp/.ICE-unix/2722,unix/hazem-PC:/tmp/.ICE-unix/2722
+SESSION_MANAGER = local/hazem-PC:@/tmp/.ICE-unix/2225,unix/hazem-PC:/tmp/.ICE-unix/2225
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=3c47c37c8ffe3a97d71b248762d04035
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=7bb60993fd49a813aceb23e463238b84
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -131,7 +131,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4e459934_6fcc_492a_86a6_2c72652506f2
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/cbaf0ba2_0cc1_4aae_885a_80e6b0bcfcfc
 # environment
 MAKELEVEL := 0
 # default
@@ -139,7 +139,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = roWQvlRtbjV1sTGnl076x1kS40KbSe_Vm9d35bEEAzZ_pGAKkat7
 # environment
-PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/hazem/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -151,9 +151,9 @@ SNAP_USER_COMMON = /home/hazem/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/101
+SNAP = /snap/code/108
 # environment
-SNAP_REVISION = 101
+SNAP_REVISION = 108
 # environment
 SNAP_REAL_HOME = /home/hazem
 # environment
@@ -183,7 +183,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 2722
+SYSTEMD_EXEC_PID = 2225
 # environment
 DISPLAY = :1
 # environment
@@ -195,9 +195,7 @@ DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
 # default
 MAKE_VERSION := 4.3
 # environment
-DISABLE_WAYLAND = 1
-# environment
-SNAP_DATA = /var/snap/code/101
+SNAP_DATA = /var/snap/code/108
 # environment
 SNAP_CONTEXT = roWQvlRtbjV1sTGnl076x1kS40KbSe_Vm9d35bEEAzZ_pGAKkat7
 # environment
@@ -225,13 +223,13 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-e8719bd2-1.69.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-e8719bd2-1.71.2-main.sock
 # environment
 TERM = xterm-256color
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/101/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/108/usr/share/glib-2.0/schemas
 # environment
 PAPERSIZE = letter
 # default
@@ -239,7 +237,7 @@ PAPERSIZE = letter
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = b06ae3b2
+SNAP_VERSION = 74b1f979
 # default
 SUFFIXES := 
 # environment
@@ -253,7 +251,7 @@ SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/hazem/snap/code/101
+SNAP_USER_DATA = /home/hazem/snap/code/108
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -263,7 +261,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=125/1024=12%, Rehash=0, Collisions=13/152=9%
+# Load=124/1024=12%, Rehash=0, Collisions=13/151=9%
 
 # Pattern-specific Variable Values
 
@@ -279,9 +277,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # No implicit rules.
 
- 
 # Files
 
+ 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
@@ -330,6 +328,6 @@ GNUmakefile:
 # strcache performance: lookups = 35 / hit rate = 8%
 # hash-table stats:
 # Load=32/8192=0%, Rehash=0, Collisions=1/35=3%
-# Finished Make data base on Fri Jul 15 00:33:06 2022
+# Finished Make data base on Thu Sep 15 23:07:07 2022
 
  
