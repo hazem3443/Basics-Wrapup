@@ -27,15 +27,6 @@ int minimumKeypadClickCount(string text){
     for(int i = 0; i < text.length(); i++){
         charCount[text[i]]++;
     }
-      
-    //sort the map
-    // vector<pair<char, int>> sortedCharCount;
-    // for(auto it = charCount.begin(); it != charCount.end(); it++){
-    //     sortedCharCount.push_back(make_pair(it->first, it->second));
-    // }
-    // sort(sortedCharCount.begin(), sortedCharCount.end(), [](pair<char, int> a, pair<char, int> b){
-    //     return a.second > b.second;
-    // });
 
     //print the sorted map
     int count = 0;
@@ -43,11 +34,11 @@ int minimumKeypadClickCount(string text){
     int index =0;
     for(auto it = charCount.begin(); it != charCount.end(); it++){
         
-        if(index%8 == 0)count++;
+        if(index%9 == 0)count++; //the issue with the submission was here 9 was 8 :D 
 
         clickCount += ((it->second)*count);
 
-        cout <<"idx:"<<index<< "cnt:"<<count<<"clicks:"<<clickCount<<":::"<< it->first << " " << it->second << endl;
+        // cout <<"idx:"<<index<< "cnt:"<<count<<"clicks:"<<clickCount<<":::"<< it->first << " " << it->second << endl;
         index++;
     }
 
@@ -57,7 +48,6 @@ int minimumKeypadClickCount(string text){
 
 int main()
 {
-    // ofstream fout(getenv("OUTPUT_PATH"));
 
     //example text "abacadefghibj"
     string text = "abacadefghibj";
