@@ -1,1 +1,0 @@
-# Autosar WatchDog Stack
