@@ -1,0 +1,6 @@
+[submodule "FreeRTOS"]
+	path = FreeRTOS
+	url = https://github.com/hazem3443/RTOS_Kernel.git
+[submodule "Autosar_Overview"]
+	path = Autosar_Overview
+	url = https://github.com/hazem3443/AutoSAR_Playground.git
