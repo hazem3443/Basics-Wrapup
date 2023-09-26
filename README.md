@@ -1,8 +1,8 @@
 <!-- # Basics Wrapup -->
 
-math example $$ 
+<!-- math example $$ 
 F(x) = \int_{\infty}^{-\infty} \xi
-$$
+$$ -->
 
 # Topics
 
